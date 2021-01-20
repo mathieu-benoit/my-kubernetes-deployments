@@ -50,11 +50,11 @@ spec:
             command: ["/bin/grpc_health_probe", "-addr=:7000"]
         resources:
           requests:
-            cpu: 20m
-            memory: 83Mi
+            cpu: 100m
+            memory: 64Mi
           limits:
-            cpu: 50m
-            memory: 98Mi
+            cpu: 200m
+            memory: 128Mi
 ---
 apiVersion: v1
 kind: Service
