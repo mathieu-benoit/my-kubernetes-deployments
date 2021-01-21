@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: redis:alpine
+        image: us-east4-docker.pkg.dev/mygke-756/containers/redis:6.0.10-alpine
         ports:
         - containerPort: 6379
         readinessProbe:
