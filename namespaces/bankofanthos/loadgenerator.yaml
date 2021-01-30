@@ -27,7 +27,7 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
-      serviceAccountName: boutique-ksa
+      serviceAccountName: bank-ksa
       terminationGracePeriodSeconds: 5
       restartPolicy: Always
       containers:

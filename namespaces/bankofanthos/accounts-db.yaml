@@ -32,7 +32,7 @@ spec:
         app: accounts-db
         tier: db
     spec:
-      serviceAccountName: boutique-ksa
+      serviceAccountName: bank-ksa
       containers:
       - name: accounts-db
         image: us-east4-docker.pkg.dev/mygke-756/containers/bank-of-anthos/accounts-db:v0.4.0
