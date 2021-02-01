@@ -27,12 +27,15 @@ spec:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-          image: us-east4-docker.pkg.dev/mygke-756/containers/web-app:9d789f1
+          image: us-east4-docker.pkg.dev/mygke-756/containers/web-app:5ba4364
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 5001
               protocol: TCP
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Development"
           resources:
             requests:
               cpu: 60m
