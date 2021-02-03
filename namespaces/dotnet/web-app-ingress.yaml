@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: istio
+  labels:
+    app: web
   name: web
 spec:
   backend:
