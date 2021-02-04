@@ -4,10 +4,10 @@ metadata:
   name: currency
 spec:
   hosts:
-    - www.ecb.europa.eu
+    - ecb.europa.eu
   http:
   - timeout: 3s
     route:
       - destination:
-          host: www.ecb.europa.eu
+          host: ecb.europa.eu
         weight: 100
