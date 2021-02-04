@@ -1,18 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web
+  name: web-live
   labels:
     app: web
+    version: live
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: web
+      version: live
   template:
     metadata:
       labels:
         app: web
+        version: live
     spec:
       serviceAccountName: default
       automountServiceAccountToken: false
@@ -36,6 +39,68 @@ spec:
           env:
             - name: API_URL
               value: "http://api:5001"
+          resources:
+            requests:
+              cpu: 60m
+              memory: 47Mi
+            limits:
+              cpu: 120m
+              memory: 160Mi
+          readinessProbe:
+            initialDelaySeconds: 15
+            httpGet:
+              port: 8080
+              path: /ready
+          livenessProbe:
+            initialDelaySeconds: 15
+            tcpSocket:
+              port: 8080
+      nodeSelector:
+        kubernetes.io/os: linux
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-preview
+  labels:
+    app: web
+    version: preview
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      version: preview
+  template:
+    metadata:
+      labels:
+        app: web
+        version: preview
+    spec:
+      serviceAccountName: default
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: web
+          securityContext:
+            capabilities:
+              drop:
+                - all
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          image: us-east4-docker.pkg.dev/mygke-756/containers/web-app:fca4bbb
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: API_URL
+              value: "http://api:5001"
+            - name: WELCOME_LABEL
+              value: "Hello, World!"
           resources:
             requests:
               cpu: 60m
@@ -93,3 +158,38 @@ spec:
     name: web
   updatePolicy:
     updateMode: "Off"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: web
+spec:
+  hosts:
+    - web
+  http:
+  - match:
+    - headers:
+        preview:
+          exact: true
+    route:
+    - destination:
+        host: web
+        subset: preview
+  - route:
+    - destination:
+        host: web
+        subset: live
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: web
+spec:
+  host: web
+  subsets:
+  - name: live
+    labels:
+      version: live
+  - name: preview
+    labels:
+      version: preview
