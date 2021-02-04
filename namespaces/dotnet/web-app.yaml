@@ -170,7 +170,7 @@ spec:
   - match:
     - headers:
         preview:
-          exact: true
+          exact: enable
     route:
     - destination:
         host: web
