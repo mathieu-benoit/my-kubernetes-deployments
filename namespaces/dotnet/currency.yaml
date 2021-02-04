@@ -25,4 +25,6 @@ spec:
     route:
       - destination:
           host: www.ecb.europa.eu
+          port:
+            number: 443
         weight: 100
