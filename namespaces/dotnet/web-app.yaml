@@ -79,8 +79,6 @@ spec:
     spec:
       serviceAccountName: default
       automountServiceAccountToken: false
-      securityContext:
-        runAsUser: 1000
       containers:
         - name: web
           securityContext:
