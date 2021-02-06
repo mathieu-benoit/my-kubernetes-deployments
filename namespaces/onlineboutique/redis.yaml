@@ -45,12 +45,20 @@ metadata:
   name: redis-cart
 spec:
   type: ClusterIP
-  selector:
-    app: redis-cart
   ports:
   - name: redis
     port: 6379
     targetPort: 6379
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+ name: redis-cart
+subsets:
+ - addresses:
+     - ip: 10.191.193.59
+   ports:
+     - port: 6379
 ---
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
