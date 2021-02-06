@@ -50,7 +50,7 @@ spec:
   selector:
     app: redis-cart
   ports:
-  - name: redis
+  - name: http
     port: 6379
     targetPort: 6379
 ---
