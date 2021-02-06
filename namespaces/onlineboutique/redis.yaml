@@ -13,17 +13,15 @@ spec:
     spec:
       serviceAccountName: boutique-ksa
       containers:
-      - name: redis-cart
+      - name: redis
         image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/redis:alpine
         ports:
         - containerPort: 6379
         readinessProbe:
-          initialDelaySeconds: 15
           periodSeconds: 5
           tcpSocket:
             port: 6379
         livenessProbe:
-          initialDelaySeconds: 15
           periodSeconds: 5
           tcpSocket:
             port: 6379
@@ -50,7 +48,7 @@ spec:
   selector:
     app: redis-cart
   ports:
-  - name: http
+  - name: redis
     port: 6379
     targetPort: 6379
 ---
