@@ -9,10 +9,12 @@ on:
     branches: [ main ]
     paths:
     - namespaces/myblog/*
+    - .github/workflows/ci-myblog.yml
   pull_request:
     branches: [ main ]
     paths:
     - namespaces/myblog/*
+    - .github/workflows/ci-myblog.yml
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
