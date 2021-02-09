@@ -24,12 +24,12 @@ spec:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/cartservice:6a2b074
+        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/cartservice:buggy
         ports:
         - containerPort: 7070
         env:
         - name: REDIS_ADDR
-          value: "10.113.228.179"
+          value: "redis-cart"
         resources:
           requests:
             cpu: 60m
