@@ -12,8 +12,6 @@ spec:
       labels:
         app: frontend
         version: live
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: boutique-ksa
       containers:
@@ -84,8 +82,6 @@ spec:
       labels:
         app: frontend
         version: preview
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: boutique-ksa
       containers:
