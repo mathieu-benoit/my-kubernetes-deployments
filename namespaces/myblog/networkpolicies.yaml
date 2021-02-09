@@ -18,8 +18,11 @@ spec:
       app: myblog
   policyTypes:
   - Ingress
+  - Egress
   ingress:
   - from: []
     ports:
      - port: 8080
        protocol: TCP
+  egress:
+  - {}
