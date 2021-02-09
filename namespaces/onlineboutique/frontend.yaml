@@ -202,6 +202,8 @@ metadata:
 spec:
   hosts:
     - "*"
+  gateways:
+  - frontend
   http:
   - route:
     - destination:
@@ -219,7 +221,7 @@ kind: DestinationRule
 metadata:
   name: frontend
 spec:
-  host: "*"
+  host: frontend
   subsets:
   - name: live
     labels:
