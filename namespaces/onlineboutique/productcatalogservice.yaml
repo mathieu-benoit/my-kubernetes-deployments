@@ -87,6 +87,9 @@ spec:
     - podSelector:
         matchLabels:
           app: checkoutservice
+    - podSelector:
+        matchLabels:
+          app: recommendationservice
     ports:
      - port: 3550
        protocol: TCP
