@@ -18,7 +18,11 @@ spec:
   hosts:
     - www.ecb.europa.eu
   http:
-  - timeout: 3s
+  - fault:
+      abort:
+        httpStatus: 500
+        percentage:
+          value: 100
     route:
       - destination:
           host: www.ecb.europa.eu
