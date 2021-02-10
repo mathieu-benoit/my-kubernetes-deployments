@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run a multi-line script
+      - name: Run kubeval on Kubernetes manifests	
         run: |
           cd namespaces
           docker run \
@@ -25,3 +25,9 @@ jobs:
             --strict \
             --skip-kinds VerticalPodAutoscaler,ServiceEntry,VirtualService,Gateway,DestinationRule \
             onlineboutique/*
+      - name: Run conftest for OPA regos on Kubernetes manifests	
+        run: |	
+          cd namespaces/onlineboutique
+          mkdir policy	
+          curl https://raw.githubusercontent.com/mathieu-benoit/mygkecluster/master/policy/kubernetes-policies.rego -o ./policy/kubernetes-policies.rego	
+          docker run --rm -v $(pwd):/project openpolicyagent/conftest test .
