@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run a multi-line script
         run: |
+          cd namespaces
           docker run \
             -v `pwd`/onlineboutique:/onlineboutique garethr/kubeval \
             --strict \
