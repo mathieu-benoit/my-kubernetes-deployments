@@ -25,3 +25,9 @@ jobs:
             --strict \
             --skip-kinds VerticalPodAutoscaler,ManagedCertificate \
             myblog/*
+      - name: Run conftest for OPA regos on Kubernetes manifests	
+        run: |	
+          cd namespaces/myblog
+          mkdir policy	
+          curl https://raw.githubusercontent.com/mathieu-benoit/mygkecluster/master/policy/kubernetes-policies.rego -o ./policy/kubernetes-policies.rego	
+          docker run --rm -v $(pwd):/project openpolicyagent/conftest test .
