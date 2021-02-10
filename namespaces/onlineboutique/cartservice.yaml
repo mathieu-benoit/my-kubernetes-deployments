@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: cartservice
+      wronglabel: cartservice
   template:
     metadata:
       labels:
