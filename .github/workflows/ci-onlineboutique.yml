@@ -20,7 +20,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           docker run \
-            -it \
             -v `pwd`/onlineboutique:/onlineboutique garethr/kubeval \
             --strict \
             --skip-kinds VerticalPodAutoscaler,ServiceEntry,VirtualService,Gateway,DestinationRule \
