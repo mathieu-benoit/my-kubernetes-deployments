@@ -23,5 +23,5 @@ jobs:
           docker run \
             -v `pwd`/myblog:/myblog garethr/kubeval \
             --strict \
-            --skip-kinds VerticalPodAutoscaler,ServiceEntry,VirtualService,Gateway,DestinationRule \
+            --skip-kinds VerticalPodAutoscaler,ManagedCertificate \
             myblog/*
