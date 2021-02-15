@@ -239,7 +239,10 @@ spec:
     - podSelector:
         matchLabels:
           app: loadgenerator
-    - podSelector:
+    - namespaceSelector:
+          matchLabels:
+            name: istio-system  
+      podSelector:
         matchLabels:
           app: istio-ingressgateway
     ports:
