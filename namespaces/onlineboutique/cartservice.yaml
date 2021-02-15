@@ -102,3 +102,21 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: cartservice
+spec:
+  selector:
+    matchLabels:
+      app: cartservice
+  rules:
+  - from:
+    - source:
+        principals: ["frontend", "checkoutservice"]
+    to:
+      - operation:
+          paths: ["/hipstershop.CartService/AddItem", "/hipstershop.CartService/GetCart", "/hipstershop.CartService/EmptyCart"]
+          methods: ["POST"]
+          ports: ["7070"]

@@ -98,3 +98,21 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: currencyservice
+spec:
+  selector:
+    matchLabels:
+      app: currencyservice
+  rules:
+  - from:
+    - source:
+        principals: ["frontend", "checkoutservice"]
+    to:
+      - operation:
+          paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
+          methods: ["POST"]
+          ports: ["7000"]

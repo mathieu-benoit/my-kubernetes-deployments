@@ -94,3 +94,21 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: emailservice
+spec:
+  selector:
+    matchLabels:
+      app: emailservice
+  rules:
+  - from:
+    - source:
+        principals: ["checkoutservice"]
+    to:
+      - operation:
+          paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
+          methods: ["POST"]
+          ports: ["8080"]
