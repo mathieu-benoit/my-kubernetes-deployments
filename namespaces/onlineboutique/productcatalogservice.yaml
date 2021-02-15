@@ -114,7 +114,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["frontend", "checkoutservice", "recommendationservice"]
+        principals: ["cluster.local/ns/onlineboutique/sa/frontend", "cluster.local/ns/onlineboutique/sa/checkoutservice", "cluster.local/ns/onlineboutique/sa/recommendationservice"]
     to:
       - operation:
           paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]

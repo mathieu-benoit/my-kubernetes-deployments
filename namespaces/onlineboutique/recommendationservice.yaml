@@ -110,7 +110,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["frontend"]
+        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
     to:
       - operation:
           paths: ["/hipstershop.RecommendationService/ListRecommendations"]

@@ -253,7 +253,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["loadgenerator", "cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
     to:
       - operation:
           methods: ["GET", "POST"]

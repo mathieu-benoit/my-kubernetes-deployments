@@ -106,7 +106,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["checkoutservice"]
+        principals: ["cluster.local/ns/onlineboutique/sa/checkoutservice"]
     to:
       - operation:
           paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
