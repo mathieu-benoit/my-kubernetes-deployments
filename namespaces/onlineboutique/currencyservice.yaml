@@ -110,10 +110,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
-  - from:
-    - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/checkoutservice"]
+        principals: ["cluster.local/ns/onlineboutique/sa/frontend", "cluster.local/ns/onlineboutique/sa/checkoutservice"]
     to:
       - operation:
           paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
