@@ -119,4 +119,4 @@ spec:
       - operation:
           paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]
           methods: ["POST"]
-          ports: ["7070"]
+          ports: ["3550"]
