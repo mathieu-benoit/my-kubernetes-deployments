@@ -23,7 +23,7 @@ jobs:
           docker run \
             -v `pwd`/onlineboutique:/onlineboutique garethr/kubeval \
             --strict \
-            --skip-kinds VerticalPodAutoscaler,ServiceEntry,VirtualService,Gateway,DestinationRule \
+            --skip-kinds VerticalPodAutoscaler,ServiceEntry,VirtualService,Gateway,DestinationRule,AuthorizationPolicy \
             onlineboutique/*
       - name: Run conftest for OPA regos on Kubernetes manifests	
         run: |	

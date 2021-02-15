@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: adservice
+  annotations:
+    iam.gke.io/gcp-service-account: mygke-955-boutique-gsa@mygke-955.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +18,7 @@ spec:
       labels:
         app: adservice
     spec:
-      serviceAccountName: boutique-ksa
+      serviceAccountName: adservice
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
@@ -91,3 +98,21 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: adservice
+spec:
+  selector:
+    matchLabels:
+      app: adservice
+  rules:
+  - from:
+    - source:
+        principals: ["frontend"]
+    to:
+      - operation:
+          paths: ["/hipstershop.AdService/GetAds"]
+          methods: ["POST"]
+          ports: ["9555"]

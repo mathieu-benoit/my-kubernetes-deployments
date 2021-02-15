@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: checkoutservice
+  annotations:
+    iam.gke.io/gcp-service-account: mygke-955-boutique-gsa@mygke-955.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +18,7 @@ spec:
       labels:
         app: checkoutservice
     spec:
-      serviceAccountName: boutique-ksa
+      serviceAccountName: checkoutservice
       containers:
         - name: server
           image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/checkoutservice:v0.2.2
@@ -100,3 +107,21 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: checkoutservice
+spec:
+  selector:
+    matchLabels:
+      app: checkoutservice
+  rules:
+  - from:
+    - source:
+        principals: ["frontend"]
+    to:
+      - operation:
+          paths: ["/hipstershop.CheckoutService/PlaceOrder"]
+          methods: ["POST"]
+          ports: ["5050"]

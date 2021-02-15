@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: recommendationservice
+  annotations:
+    iam.gke.io/gcp-service-account: mygke-955-boutique-gsa@mygke-955.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +18,7 @@ spec:
       labels:
         app: recommendationservice
     spec:
-      serviceAccountName: boutique-ksa
+      serviceAccountName: recommendationservice
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
@@ -91,3 +98,21 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: recommendationservice
+spec:
+  selector:
+    matchLabels:
+      app: recommendationservice
+  rules:
+  - from:
+    - source:
+        principals: ["frontend"]
+    to:
+      - operation:
+          paths: ["/hipstershop.RecommendationService/ListRecommendations"]
+          methods: ["POST"]
+          ports: ["8080"]
