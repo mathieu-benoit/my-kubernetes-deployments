@@ -235,7 +235,13 @@ spec:
   - Ingress
   - Egress
   ingress:
-  - from: []
+  - from:
+    - podSelector:
+        matchLabels:
+          app: loadgenerator
+    - podSelector:
+        matchLabels:
+          app: istio-ingressgateway
     ports:
      - port: 8080
        protocol: TCP
@@ -253,10 +259,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator"]
-  - from:
-    - source:
-        principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
     to:
       - operation:
           methods: ["GET", "POST"]
