@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: dotnet
   labels:
-    istio.io/rev: asm-182-2
+    istio.io/rev: asm-183-2
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
