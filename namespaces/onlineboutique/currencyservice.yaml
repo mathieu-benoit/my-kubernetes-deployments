@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/currencyservice:cos-2021-02-04
+        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/currencyservice:local
         ports:
         - name: grpc
           containerPort: 7000
