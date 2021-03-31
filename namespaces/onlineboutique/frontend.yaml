@@ -64,9 +64,9 @@ spec:
           - name: ENV_PLATFORM
             value: "onprem"
           - name: DISABLE_TRACING
-            value: "1"
+            value: "0"
           - name: DISABLE_PROFILER
-            value: "1"
+            value: "0"
           # - name: JAEGER_SERVICE_ADDR
           #   value: "jaeger-collector:14268"
           resources:
@@ -136,9 +136,9 @@ spec:
           - name: ENV_PLATFORM
             value: "gcp"
           - name: DISABLE_TRACING
-            value: "1"
+            value: "0"
           - name: DISABLE_PROFILER
-            value: "1"
+            value: "0"
           # - name: JAEGER_SERVICE_ADDR
           #   value: "jaeger-collector:14268"
           resources:
