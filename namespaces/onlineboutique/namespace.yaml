@@ -4,3 +4,11 @@ metadata:
   name: onlineboutique
   labels:
     istio.io/rev: asm-192-1
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+spec:
+  mtls:
+    mode: STRICT
