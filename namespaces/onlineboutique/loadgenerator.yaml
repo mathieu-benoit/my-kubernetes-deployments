@@ -51,16 +51,3 @@ spec:
     name: loadgenerator
   updatePolicy:
     updateMode: "Off"
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: loadgenerator
-spec:
-  podSelector:
-    matchLabels:
-      app: loadgenerator
-  policyTypes:
-  - Egress
-  egress:
-  - {}
