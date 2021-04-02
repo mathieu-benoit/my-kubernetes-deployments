@@ -240,8 +240,8 @@ spec:
         matchLabels:
           app: loadgenerator
     - namespaceSelector:
-          matchLabels:
-            name: istio-system  
+        matchLabels:
+          name: istio-system  
       podSelector:
         matchLabels:
           app: istio-ingressgateway
