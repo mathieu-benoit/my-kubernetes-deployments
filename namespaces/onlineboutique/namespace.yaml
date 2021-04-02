@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: onlineboutique
   labels:
-    istio.io/rev: asm-191-1
+    istio.io/rev: asm-192-1
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

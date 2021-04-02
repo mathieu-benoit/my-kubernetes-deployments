@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: bankofanthos
   labels:
-    istio.io/rev: asm-191-1
+    istio.io/rev: asm-192-1
