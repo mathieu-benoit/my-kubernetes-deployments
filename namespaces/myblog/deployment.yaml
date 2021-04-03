@@ -29,9 +29,7 @@ spec:
           image: us-east4-docker.pkg.dev/mygke-955/containers/myblog:e9041ef
           imagePullPolicy: IfNotPresent
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
+            - containerPort: 8080
           resources:
             requests:
               cpu: 5m

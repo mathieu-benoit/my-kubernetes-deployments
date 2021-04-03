@@ -10,8 +10,7 @@ spec:
   type: NodePort
   ports:
     - port: 8080
-      targetPort: http
-      protocol: TCP
+      targetPort: 8080
       name: http
   selector:
     app: myblog
