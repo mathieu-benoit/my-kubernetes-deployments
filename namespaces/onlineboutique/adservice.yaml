@@ -113,5 +113,6 @@ spec:
         principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
     to:
       - operation:
-          methods: ["GET"]
+          paths: ["/hipstershop.AdService/GetAds"]
+          methods: ["POST"]
           ports: ["9555"]

@@ -122,5 +122,6 @@ spec:
         principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
     to:
       - operation:
+          paths: ["/hipstershop.CheckoutService/PlaceOrder"]
           methods: ["POST"]
           ports: ["5050"]
