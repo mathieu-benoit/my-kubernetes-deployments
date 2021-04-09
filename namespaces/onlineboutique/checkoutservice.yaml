@@ -107,3 +107,20 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: checkoutservice
+spec:
+  selector:
+    matchLabels:
+      app: checkoutservice
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
+    to:
+      - operation:
+          methods: ["POST"]
+          ports: ["5050"]

@@ -98,3 +98,20 @@ spec:
        protocol: TCP
   egress:
   - {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: adservice
+spec:
+  selector:
+    matchLabels:
+      app: adservice
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
+    to:
+      - operation:
+          methods: ["GET"]
+          ports: ["9555"]
