@@ -23,7 +23,7 @@ jobs:
           docker run \
             -v `pwd`/myblog:/myblog garethr/kubeval \
             --strict \
-            --skip-kinds VerticalPodAutoscaler,ManagedCertificate,AuthorizationPolicy,FrontendConfig \
+            --skip-kinds VerticalPodAutoscaler,ManagedCertificate,AuthorizationPolicy,FrontendConfig,BackendConfig \
             myblog/*
       - name: Run conftest for OPA regos on Kubernetes manifests	
         run: |	
