@@ -4,6 +4,7 @@ metadata:
   name: myblog
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/backend-config: '{"default": "myblog"}'
   labels:
     app: myblog
 spec:
