@@ -6,6 +6,7 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: myblog
     networking.gke.io/managed-certificates: myblog
     networking.gke.io/v1beta1.FrontendConfig: myblog
+    cloud.google.com/backend-config: '{"default": "myblog"}'
 spec:
   backend:
     serviceName: myblog
