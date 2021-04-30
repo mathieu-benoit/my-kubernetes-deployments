@@ -31,7 +31,7 @@ spec:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/cartservice:a3189d7
+        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/cartservice:7fd5e5f
         ports:
         - containerPort: 7070
         env:
