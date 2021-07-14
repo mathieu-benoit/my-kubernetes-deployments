@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: myblog
@@ -7,6 +7,11 @@ metadata:
     networking.gke.io/managed-certificates: myblog
     networking.gke.io/v1beta1.FrontendConfig: myblog
 spec:
-  backend:
-    serviceName: myblog
-    servicePort: 8080
+  rules:
+  - http:
+      paths:
+      - path: /*
+        pathType: Prefix
+        backend:
+          serviceName: myblog
+          servicePort: 8080
