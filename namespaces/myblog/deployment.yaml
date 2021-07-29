@@ -26,7 +26,7 @@ spec:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-          image: us-east4-docker.pkg.dev/mygke-955/containers/myblog:020576e
+          image: us-east4-docker.pkg.dev/mygke-955/containers/myblog:256f633
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
