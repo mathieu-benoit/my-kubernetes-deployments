@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myblog
+  labels:
+    app: myblog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myblog
+  template:
+    metadata:
+      labels:
+        app: myblog
+    spec:
+      serviceAccountName: default
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: myblog
+          securityContext:
+            capabilities:
+              drop:
+                - all
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          image: us-east4-docker.pkg.dev/mygke-955/containers/myblog:cfa0d0f
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 5m
+              memory: 6Mi
+            limits:
+              cpu: 15m
+              memory: 122Mi
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp
+      nodeSelector:
+        kubernetes.io/os: linux
+      volumes:
+      - emptyDir: {}
+        name: tmp
