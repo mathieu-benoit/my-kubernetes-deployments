@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: onlineboutique
   labels:
-    istio.io/rev: asm-1104-6
+    istio.io/rev: asm-1104-9
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
