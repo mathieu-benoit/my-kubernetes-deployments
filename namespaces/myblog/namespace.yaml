@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: myblog
   labels:
-    istio.io/rev: asm-1104-9
+    istio.io/rev: asm-1104-14
