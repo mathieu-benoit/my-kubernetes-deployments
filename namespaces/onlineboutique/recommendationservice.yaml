@@ -3,7 +3,7 @@ kind: ServiceAccount
 metadata:
   name: recommendationservice
   annotations:
-    iam.gke.io/gcp-service-account: mygke-955-boutique-gsa@mygke-955.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
