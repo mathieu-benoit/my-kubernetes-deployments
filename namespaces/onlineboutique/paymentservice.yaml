@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-955/containers/boutique/paymentservice:v0.3.0
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/paymentservice:v0.3.0
         ports:
         - containerPort: 50051
         env:
