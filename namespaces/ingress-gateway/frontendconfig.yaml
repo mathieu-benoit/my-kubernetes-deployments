@@ -3,7 +3,7 @@ kind: FrontendConfig
 metadata:
   name: istio-ingressgateway
 spec:
-  sslPolicy: istio-ingressgateway
+  sslPolicy: mygke-istio-ingressgateway
   redirectToHttps:
     enabled: true
     responseCodeName: MOVED_PERMANENTLY_DEFAULT
