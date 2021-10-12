@@ -3,5 +3,5 @@ kind: Namespace
 metadata:
   name: istio-ingress
   labels:
-    name: istio-ingress
+    name: istio-ingress # for NetworkPolicies
     istio.io/rev: asm-1112-17
