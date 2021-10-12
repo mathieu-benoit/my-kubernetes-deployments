@@ -149,7 +149,7 @@ spec:
           app: loadgenerator
     - namespaceSelector:
         matchLabels:
-          name: istio-system  
+          name: istio-ingress  
       podSelector:
         matchLabels:
           app: istio-ingressgateway
@@ -170,7 +170,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/istio-ingress/sa/istio-ingressgateway-service-account"]
     to:
       - operation:
           ports: ["8080"]
