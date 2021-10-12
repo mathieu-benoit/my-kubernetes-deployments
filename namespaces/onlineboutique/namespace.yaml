@@ -3,6 +3,7 @@ kind: Namespace
 metadata:
   name: onlineboutique
   labels:
+    name: onlineboutique
     istio.io/rev: asm-1112-17
 ---
 apiVersion: security.istio.io/v1beta1
