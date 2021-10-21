@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: istio-ingressgateway
+  name: asm-ingressgateway
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "istio-ingressgateway"}'
+    cloud.google.com/backend-config: '{"default": "asm-ingressgateway"}'
   labels:
-    app: istio-ingressgateway
-    istio: ingressgateway
+    app: asm-ingressgateway
+    asm: ingressgateway
 spec:
   ports:
   # status-port exposes a /healthz/ready endpoint that can be used with GKE Ingress health checks
@@ -21,6 +21,6 @@ spec:
   - name: https
     port: 443
   selector:
-    istio: ingressgateway
-    app: istio-ingressgateway
+    asm: ingressgateway
+    app: asm-ingressgateway
   type: ClusterIP

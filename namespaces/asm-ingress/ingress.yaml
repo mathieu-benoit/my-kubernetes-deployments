@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: istio-ingressgateway
+  name: asm-ingressgateway
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: mygke-istio-ingressgateway
-    networking.gke.io/managed-certificates: istio-ingressgateway
-    networking.gke.io/v1beta1.FrontendConfig: istio-ingressgateway
+    kubernetes.io/ingress.global-static-ip-name: mygke-asm-ingressgateway
+    networking.gke.io/managed-certificates: asm-ingressgateway
+    networking.gke.io/v1beta1.FrontendConfig: asm-ingressgateway
 spec:
   rules:
   - host: light.alwaysupalwayson.com
@@ -15,6 +15,6 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: istio-ingressgateway
+            name: asm-ingressgateway
             port:
               number: 80

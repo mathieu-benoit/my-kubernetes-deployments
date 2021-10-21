@@ -1,11 +1,11 @@
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
 metadata:
-  name: istio-ingressgateway
+  name: asm-ingressgateway
 spec:
   healthCheck:
     requestPath: /healthz/ready
     port: 15021
     type: HTTP
   securityPolicy:
-    name: mygke-istio-ingressgateway
+    name: mygke-asm-ingressgateway

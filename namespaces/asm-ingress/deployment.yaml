@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: istio-ingressgateway
+  name: asm-ingressgateway
 spec:
   selector:
     matchLabels:
-      app: istio-ingressgateway
-      istio: ingressgateway
+      app: asm-ingressgateway
+      asm: ingressgateway
   template:
     metadata:
       annotations:
@@ -14,8 +14,8 @@ spec:
         # required configuration.
         inject.istio.io/templates: gateway
       labels:
-        app: istio-ingressgateway
-        istio: ingressgateway
+        app: asm-ingressgateway
+        asm: ingressgateway
     spec:
       containers:
       - name: istio-proxy
@@ -27,25 +27,25 @@ spec:
           requests:
             cpu: 100m
             memory: 128Mi
-      serviceAccountName: istio-ingressgateway
+      serviceAccountName: asm-ingressgateway
 ---
 # PodDisruptionBudget will instruct Kubernetes to ensure at least 1 replica is available when possible
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: istio-ingressgateway
+  name: asm-ingressgateway
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      istio: ingressgateway
-      app: istio-ingressgateway
+      asm: ingressgateway
+      app: asm-ingressgateway
 ---
 # HorizontalPodAutoscaler will automatically scale the gateway replica count based on CPU utilization
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: istio-ingressgateway
+  name: asm-ingressgateway
 spec:
   maxReplicas: 5
   metrics:
@@ -57,4 +57,4 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: istio-ingressgateway
+    name: asm-ingressgateway
