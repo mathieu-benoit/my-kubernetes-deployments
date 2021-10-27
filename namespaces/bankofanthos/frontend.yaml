@@ -1,10 +1,3 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: frontend
-  annotations:
-    iam.gke.io/gcp-service-account: mygke-955-bank-gsa@mygke-955.iam.gserviceaccount.com
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,7 +11,7 @@ spec:
       labels:
         app: frontend
     spec:
-      serviceAccountName: frontend
+      serviceAccountName: bankofanthos
       terminationGracePeriodSeconds: 5
       containers:
       - name: front
