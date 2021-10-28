@@ -5,3 +5,11 @@ metadata:
   labels:
     name: bankofanthos
     istio.io/rev: asm-1112-17
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+spec:
+  mtls:
+    mode: STRICT
