@@ -1,7 +1,15 @@
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name: asm-ingressgateway
+  name: myblog-light
 spec:
   domains:
     - light.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: bankofanthos
+spec:
+  domains:
+    - boa.alwaysupalwayson.com
