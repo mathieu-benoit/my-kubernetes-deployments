@@ -13,3 +13,11 @@ metadata:
 spec:
   domains:
     - boa.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: onlineboutique
+spec:
+  domains:
+    - ob.alwaysupalwayson.com

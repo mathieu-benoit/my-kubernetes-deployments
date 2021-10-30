@@ -113,7 +113,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*"
+    - ob.alwaysupalwayson.com
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -149,10 +149,10 @@ spec:
           app: loadgenerator
     - namespaceSelector:
         matchLabels:
-          name: istio-ingress  
+          name: asm-ingress
       podSelector:
         matchLabels:
-          app: istio-ingressgateway
+          app: asm-ingressgateway
     ports:
      - port: 8080
        protocol: TCP
@@ -170,7 +170,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/istio-ingress/sa/istio-ingressgateway-service-account"]
+        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
     to:
       - operation:
           ports: ["8080"]
