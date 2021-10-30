@@ -20,7 +20,13 @@ spec:
   - Ingress
   - Egress
   ingress:
-  - from: []
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: asm-ingress
+      podSelector:
+        matchLabels:
+          app: asm-ingressgateway
     ports:
      - port: 8080
        protocol: TCP

@@ -14,7 +14,10 @@ spec:
     matchLabels:
       app: myblog
   rules:
-  - to:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
+    to:
       - operation:
           methods: ["GET"]
           ports: ["8080"]
