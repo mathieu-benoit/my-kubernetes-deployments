@@ -36,7 +36,7 @@ spec:
         - containerPort: 7070
         env:
         - name: REDIS_ADDR
-          value: "10.138.73.211"
+          value: "10.169.199.11"
         resources:
           requests:
             cpu: 60m
