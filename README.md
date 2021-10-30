@@ -1,5 +1,7 @@
 # Anthos Configuration Management Directory
 
-This is the root directory for Anthos Configuration Management.
+This is the root directory for Anthos Configuration Management to deploy my apps in my GKE cluster.
 
-See [our documentation](https://cloud.google.com/anthos-config-management/docs/repo) for how to use each subdirectory.
+Here is the topology once deployed:
+
+![topology](topology.png)
