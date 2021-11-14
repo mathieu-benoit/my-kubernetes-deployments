@@ -6,7 +6,6 @@ metadata:
     cloud.google.com/neg: '{"ingress": true}'
     cloud.google.com/backend-config: '{"default": "asm-ingressgateway"}'
   labels:
-    app: asm-ingressgateway
     asm: ingressgateway
 spec:
   ports:
@@ -22,5 +21,4 @@ spec:
     port: 443
   selector:
     asm: ingressgateway
-    app: asm-ingressgateway
   type: ClusterIP

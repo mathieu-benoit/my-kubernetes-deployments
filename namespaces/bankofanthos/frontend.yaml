@@ -101,27 +101,12 @@ metadata:
   name: frontend
 spec:
   hosts:
-    - "*"
+    - boa.alwaysupalwayson.com
   gateways:
-  - frontend
+  - asm-ingress/asm-ingressgateway
   http:
   - route:
     - destination:
         host: frontend
         port:
           number: 80
----
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: frontend
-spec:
-  selector:
-    asm: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - boa.alwaysupalwayson.com
