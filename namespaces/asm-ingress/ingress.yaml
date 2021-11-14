@@ -8,38 +8,7 @@ metadata:
     networking.gke.io/v1beta1.FrontendConfig: asm-ingressgateway
 spec:
   rules:
-  - host: alwaysupalwayson.com
-    http:
-      paths:
-      - path: /*
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: asm-ingressgateway
-            port:
-              number: 80
-  - host: light.alwaysupalwayson.com
-    http:
-      paths:
-      - path: /*
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: asm-ingressgateway
-            port:
-              number: 80
-  - host: boa.alwaysupalwayson.com
-    http:
-      paths:
-      - path: /*
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: asm-ingressgateway
-            port:
-              number: 80
-  - host: ob.alwaysupalwayson.com
-    http:
+  - http:
       paths:
       - path: /*
         pathType: ImplementationSpecific
