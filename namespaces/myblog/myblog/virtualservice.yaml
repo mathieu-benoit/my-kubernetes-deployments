@@ -4,9 +4,9 @@ metadata:
   name: myblog
 spec:
   hosts:
-    - "*"
+    - alwaysupalwayson.com
   gateways:
-  - myblog
+  - asm-ingress/asm-ingressgateway
   http:
   - route:
     - destination:
