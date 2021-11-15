@@ -7,8 +7,8 @@ spec:
     asm: ingressgateway
   servers:
   - port:
-      number: 80
-      name: http
-      protocol: HTTP
+      number: 443
+      name: https
+      protocol: HTTPS
     hosts:
     - "*" # Using the wildcard entry sends the encrypted packet (from GCLB) to the ASM ingress gateway which decrypts the packet and uses the HTTP Host Header (in the decrypted packet) to make routing decisions (via VirtualService).

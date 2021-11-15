@@ -15,8 +15,6 @@ spec:
     protocol: TCP
     targetPort: 15021
   # Any ports exposed in Gateway resources should be exposed here.
-  - name: http2
-    port: 80
   - name: https
     port: 443
   selector:
