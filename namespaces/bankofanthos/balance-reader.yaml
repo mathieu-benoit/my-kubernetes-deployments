@@ -114,6 +114,6 @@ spec:
         principals: ["cluster.local/ns/bankofanthos/sa/frontend", "cluster.local/ns/bankofanthos/sa/ledgerwriter"]
     to:
       - operation:
-          paths: ["/balances"]
+          paths: ["/balances/*"]
           methods: ["GET"]
           ports: ["8080"]

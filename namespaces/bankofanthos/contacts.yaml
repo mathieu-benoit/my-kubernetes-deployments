@@ -92,6 +92,6 @@ spec:
         principals: ["cluster.local/ns/bankofanthos/sa/frontend"]
     to:
       - operation:
-          paths: ["/contacts"]
+          paths: ["/contacts/*"]
           methods: ["GET"]
           ports: ["8080"]
