@@ -103,5 +103,6 @@ spec:
         principals: ["cluster.local/ns/bankofanthos/sa/frontend"]
     to:
       - operation:
+          paths: ["/transactions"]
           methods: ["POST"]
           ports: ["8080"]
