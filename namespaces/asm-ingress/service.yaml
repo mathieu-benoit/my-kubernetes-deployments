@@ -5,6 +5,7 @@ metadata:
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
     cloud.google.com/backend-config: '{"default": "asm-ingressgateway"}'
+    cloud.google.com/app-protocols: '{"http2":"HTTP"}'
   labels:
     asm: ingressgateway
 spec:
