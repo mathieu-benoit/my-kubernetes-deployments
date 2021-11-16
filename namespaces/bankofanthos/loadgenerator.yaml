@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: loadgenerator
+  annotations:
+    iam.gke.io/gcp-service-account: bankofanthos-gsa@mygke-200.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +21,7 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
-      serviceAccountName: bankofanthos
+      serviceAccountName: loadgenerator
       terminationGracePeriodSeconds: 5
       restartPolicy: Always
       containers:

@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: balancereader
+  annotations:
+    iam.gke.io/gcp-service-account: bankofanthos-gsa@mygke-200.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +18,7 @@ spec:
       labels:
         app: balancereader
     spec:
-      serviceAccountName: bankofanthos
+      serviceAccountName: balancereader
       terminationGracePeriodSeconds: 5
       containers:
       - name: balancereader
@@ -92,3 +99,20 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: balancereader
+spec:
+  selector:
+    matchLabels:
+      app: balancereader
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/bankofanthos/sa/frontend", "cluster.local/ns/bankofanthos/sa/ledgerwriter"]
+    to:
+      - operation:
+          methods: ["GET"]
+          ports: ["8080"]

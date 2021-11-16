@@ -1,3 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: transactionhistory
+  annotations:
+    iam.gke.io/gcp-service-account: bankofanthos-gsa@mygke-200.iam.gserviceaccount.com
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -11,7 +18,7 @@ spec:
       labels:
         app: transactionhistory
     spec:
-      serviceAccountName: bankofanthos
+      serviceAccountName: transactionhistory
       terminationGracePeriodSeconds: 5
       containers:
       - name: transactionhistory
@@ -97,3 +104,20 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: transactionhistory
+spec:
+  selector:
+    matchLabels:
+      app: transactionhistory
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/bankofanthos/sa/frontend"]
+    to:
+      - operation:
+          methods: ["GET"]
+          ports: ["8080"]
