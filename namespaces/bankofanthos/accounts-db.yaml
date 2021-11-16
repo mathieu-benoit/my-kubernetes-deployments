@@ -82,3 +82,19 @@ data:
   POSTGRES_USER: accounts-admin
   POSTGRES_PASSWORD: accounts-pwd
   ACCOUNTS_DB_URI: postgresql://accounts-admin:accounts-pwd@accounts-db:5432/accounts-db
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: accounts-db
+spec:
+  selector:
+    matchLabels:
+      app: accounts-db
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/bankofanthos/sa/contacts", "cluster.local/ns/bankofanthos/sa/userservice"]
+    to:
+      - operation:
+          ports: ["5432"]

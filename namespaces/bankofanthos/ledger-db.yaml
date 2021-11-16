@@ -74,3 +74,19 @@ spec:
   - name: tcp
     port: 5432
     targetPort: 5432
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: ledger-db
+spec:
+  selector:
+    matchLabels:
+      app: ledger-db
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/bankofanthos/sa/balancereader", "cluster.local/ns/bankofanthos/sa/transactionhistory", "cluster.local/ns/bankofanthos/sa/ledgerwriter"]
+    to:
+      - operation:
+          ports: ["5432"]
