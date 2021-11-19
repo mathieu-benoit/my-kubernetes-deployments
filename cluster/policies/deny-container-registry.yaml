@@ -1,7 +1,7 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sAllowedRepos
 metadata:
-  name: allowed-repos
+  name: deny-container-registry
 spec:
   enforcementAction: deny
   match:
