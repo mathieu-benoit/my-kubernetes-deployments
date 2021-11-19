@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     matchLabels:
+      app: asm-ingressgateway
       asm: ingressgateway
   template:
     metadata:
@@ -37,6 +38,7 @@ spec:
   minAvailable: 1
   selector:
     matchLabels:
+      app: asm-ingressgateway
       asm: ingressgateway
 ---
 # HorizontalPodAutoscaler will automatically scale the gateway replica count based on CPU utilization
