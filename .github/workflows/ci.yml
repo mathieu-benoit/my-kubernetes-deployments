@@ -12,14 +12,14 @@ jobs:
       - uses: google-github-actions/setup-gcloud@v0.2.1
       - name: dehydrate the kubernetes manifests	
         run: |	
-          #gsutil cp gs://config-management-release/released/latest/linux_amd64/nomos nomos
-          #chmod +x nomos
           gcloud components install nomos --quiet
+          nomos version
           mkdir tmp
           nomos hydrate --flat --no-api-server-check --output tmp/hydrated-manifests.yaml
       - name: test opa gatekeeper constraints against kubernetes manifests
         run: |
-          curl -L https://github.com/GoogleContainerTools/kpt/releases/download/v1.0.0-beta.8/kpt_linux_amd64 -o kpt
-          chmod +x kpt
-          ./kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 --truncate-output=false tmp/
-      
+          gcloud components install kpt --quiet
+          kpt version
+          #curl -L https://github.com/GoogleContainerTools/kpt/releases/download/v1.0.0-beta.8/kpt_linux_amd64 -o kpt
+          #chmod +x kpt
+          kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 --truncate-output=false tmp/
