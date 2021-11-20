@@ -1,18 +1,20 @@
 name: ci
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - uses: google-github-actions/setup-gcloud@v0.2.1
       - name: dehydrate the kubernetes manifests	
         run: |	
-          gsutil cp gs://config-management-release/released/latest/linux_amd64/nomos nomos
-          chmod +x nomos
+          #gsutil cp gs://config-management-release/released/latest/linux_amd64/nomos nomos
+          #chmod +x nomos
+          gcloud components install nomos
           mkdir tmp
           ./nomos hydrate --flat --no-api-server-check --output tmp/hydrated-manifests.yaml
       - name: test opa gatekeeper constraints against kubernetes manifests
