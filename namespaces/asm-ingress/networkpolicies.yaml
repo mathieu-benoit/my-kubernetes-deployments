@@ -42,3 +42,23 @@ spec:
     ports:
      - port: 8080
        protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: onlineboutique
+      podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+     - port: 8080
+       protocol: TCP
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: bankofanthos
+      podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+     - port: 8080
+       protocol: TCP
