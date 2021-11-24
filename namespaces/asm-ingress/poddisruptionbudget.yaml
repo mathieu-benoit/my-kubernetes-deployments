@@ -1,0 +1,11 @@
+# PodDisruptionBudget will instruct Kubernetes to ensure at least 1 replica is available when possible
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: asm-ingressgateway
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: asm-ingressgateway
+      asm: ingressgateway

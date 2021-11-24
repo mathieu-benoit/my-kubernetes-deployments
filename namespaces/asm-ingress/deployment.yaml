@@ -27,34 +27,16 @@ spec:
           requests:
             cpu: 100m
             memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      securityContext:
+        fsGroup: 1337
+        runAsGroup: 1337
+        runAsNonRoot: true
+        runAsUser: 1337
       serviceAccountName: asm-ingressgateway
----
-# PodDisruptionBudget will instruct Kubernetes to ensure at least 1 replica is available when possible
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: asm-ingressgateway
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app: asm-ingressgateway
-      asm: ingressgateway
----
-# HorizontalPodAutoscaler will automatically scale the gateway replica count based on CPU utilization
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: asm-ingressgateway
-spec:
-  maxReplicas: 5
-  metrics:
-  - resource:
-      name: cpu
-      targetAverageUtilization: 80
-    type: Resource
-  minReplicas: 2
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: asm-ingressgateway
