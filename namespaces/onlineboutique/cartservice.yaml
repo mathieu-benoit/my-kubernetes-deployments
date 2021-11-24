@@ -21,16 +21,19 @@ spec:
       serviceAccountName: cartservice
       terminationGracePeriodSeconds: 5
       securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
         runAsUser: 1000
       containers:
       - name: server
         securityContext:
-            capabilities:
-              drop:
-                - all
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+          privileged: false
+          readOnlyRootFilesystem: true
         image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:47a317a
         ports:
         - containerPort: 7070
