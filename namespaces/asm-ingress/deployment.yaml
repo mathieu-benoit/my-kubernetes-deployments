@@ -20,6 +20,11 @@ spec:
       containers:
       - name: istio-proxy
         image: auto # The image will automatically update each time the pod starts.
+        - env:
+          - name: ISTIO_META_UNPRIVILEGED_POD
+            value: "true"
+          #- name: ISTIO_META_ROUTER_MODE
+          #  value: standard
         resources:
           limits:
             cpu: 2000m
