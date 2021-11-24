@@ -16,15 +16,18 @@ spec:
     spec:
       serviceAccountName: default
       securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
         runAsUser: 1000
       containers:
         - name: myblog
           securityContext:
+            allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - all
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
+            privileged: false
             readOnlyRootFilesystem: true
           image: us-east4-docker.pkg.dev/mygke-200/containers/myblog:1f55e30
           imagePullPolicy: IfNotPresent
