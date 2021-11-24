@@ -13,20 +13,20 @@ metadata:
 spec:
   mtls:
     mode: STRICT
-#---
-#apiVersion: networking.k8s.io/v1
-#kind: NetworkPolicy
-#metadata:
-#  name: deny-all
-#spec:
-#  podSelector: {}
-#  policyTypes:
-#  - Ingress
-#  - Egress
-#---
-#apiVersion: security.istio.io/v1beta1
-#kind: AuthorizationPolicy
-#metadata:
-#  name: deny-all
-#spec:
-#  {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+spec:
+  {}
