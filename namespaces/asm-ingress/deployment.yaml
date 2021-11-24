@@ -25,6 +25,13 @@ spec:
             value: "true"
           - name: ISTIO_META_ROUTER_MODE
             value: standard
+        ports:
+          - containerPort: 15021
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
         resources:
           limits:
             cpu: 2000m
