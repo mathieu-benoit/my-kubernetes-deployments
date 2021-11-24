@@ -23,8 +23,8 @@ spec:
         - env:
           - name: ISTIO_META_UNPRIVILEGED_POD
             value: "true"
-          #- name: ISTIO_META_ROUTER_MODE
-          #  value: standard
+          - name: ISTIO_META_ROUTER_MODE
+            value: standard
         resources:
           limits:
             cpu: 2000m
