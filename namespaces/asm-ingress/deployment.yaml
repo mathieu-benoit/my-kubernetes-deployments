@@ -20,18 +20,18 @@ spec:
       containers:
       - name: istio-proxy
         image: auto # The image will automatically update each time the pod starts.
-        - env:
-          - name: ISTIO_META_UNPRIVILEGED_POD
-            value: "true"
-          - name: ISTIO_META_ROUTER_MODE
-            value: standard
+        env:
+        - name: ISTIO_META_UNPRIVILEGED_POD
+          value: "true"
+        - name: ISTIO_META_ROUTER_MODE
+          value: standard
         ports:
-          - containerPort: 15021
-            protocol: TCP
-          - containerPort: 8080
-            protocol: TCP
-          - containerPort: 8443
-            protocol: TCP
+        - containerPort: 15021
+          protocol: TCP
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
         resources:
           limits:
             cpu: 2000m
