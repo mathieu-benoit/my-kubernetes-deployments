@@ -18,7 +18,7 @@ jobs:
       - name: kubeval
         run: |
           gcloud components install kpt --quiet
-          kpt fn eval tmp --image gcr.io/kpt-fn/kubeval:v0.2 -- strict=true
+          kpt fn eval tmp --image gcr.io/kpt-fn/kubeval:v0.2 -- strict=true ignore_missing_schemas=true
       - name: gatekeeper
         run: |
           kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 --truncate-output=false tmp/
