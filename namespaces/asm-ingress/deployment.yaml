@@ -23,6 +23,8 @@ spec:
         env:
         - name: ISTIO_META_UNPRIVILEGED_POD
           value: "true"
+        - name: ISTIO_META_ROUTER_MODE
+          value: standard
         ports:
         - containerPort: 15021
           protocol: TCP
