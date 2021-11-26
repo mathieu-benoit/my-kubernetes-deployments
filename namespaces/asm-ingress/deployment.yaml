@@ -44,9 +44,25 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
+        volumeMounts:
+          - mountPath: /etc/istio/ingressgateway-certs
+            name: ingressgateway-certs
+            readOnly: true
+          - mountPath: /etc/istio/ingressgateway-ca-certs
+            name: ingressgateway-ca-certs
+            readOnly: true
       securityContext:
         fsGroup: 1337
         runAsGroup: 1337
         runAsNonRoot: true
         runAsUser: 1337
       serviceAccountName: asm-ingressgateway
+      volumes:
+        - name: ingressgateway-certs
+          secret:
+            optional: true
+            secretName: istio-ingressgateway-certs
+        - name: ingressgateway-ca-certs
+          secret:
+            optional: true
+            secretName: istio-ingressgateway-ca-certs
