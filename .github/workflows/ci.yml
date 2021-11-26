@@ -10,15 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: google-github-actions/setup-gcloud@v0.2.1
-      - name: hydrate all the kubernetes manifests in one file	
+      - name: hydration	
         run: |
           gcloud components install nomos --quiet
           mkdir tmp
           nomos hydrate --flat --no-api-server-check --output tmp/hydrated-manifests.yaml
-      - name: test opa gatekeeper constraints against kubernetes manifests
+      - name: kubeval
         run: |
           gcloud components install kpt --quiet
-          kpt fn eval --image gcr.io/kpt-fn/kubeval:v0.2 --strict tmp/*
-      - name: test opa gatekeeper constraints against kubernetes manifests
+          kpt fn eval tmp --image gcr.io/kpt-fn/kubeval:v0.2 -- strict=true
+      - name: gatekeeper
         run: |
           kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 --truncate-output=false tmp/
