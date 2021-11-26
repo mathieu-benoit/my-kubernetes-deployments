@@ -18,4 +18,7 @@ jobs:
       - name: test opa gatekeeper constraints against kubernetes manifests
         run: |
           gcloud components install kpt --quiet
+          kpt fn eval --image gcr.io/kpt-fn/kubeval:v0.2 --strict tmp/*
+      - name: test opa gatekeeper constraints against kubernetes manifests
+        run: |
           kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 --truncate-output=false tmp/
