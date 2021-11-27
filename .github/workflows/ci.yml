@@ -12,8 +12,7 @@ jobs:
       - uses: google-github-actions/setup-gcloud@v0.2.1
       - name: install kpt and nomos	
         run: |
-          gcloud components install nomos --quiet
-          gcloud components install kpt --quiet
+          gcloud components install kpt nomos --quiet
       - name: hydration	
         run: |
           mkdir tmp
