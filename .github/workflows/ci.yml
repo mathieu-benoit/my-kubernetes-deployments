@@ -26,3 +26,7 @@ jobs:
       - name: gatekeeper
         run: |
           kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 tmp/
+      - name: analyze
+        run: |
+          curl -sL https://istio.io/downloadIstioctl | sh -
+          $HOME/.istioctl/bin/istioctl analyze tmp/
