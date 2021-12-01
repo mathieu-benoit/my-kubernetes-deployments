@@ -29,4 +29,5 @@ jobs:
       - name: analyze
         run: |
           curl -sL https://istio.io/downloadIstioctl | sh -
+          cat tmp/hydrated-manifests.yaml
           $HOME/.istioctl/bin/istioctl analyze tmp/hydrated-manifests.yaml --use-kube=false -v
