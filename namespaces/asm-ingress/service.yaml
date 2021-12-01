@@ -11,7 +11,7 @@ metadata:
 spec:
   ports:
   # status-port exposes a /healthz/ready endpoint that can be used with GKE Ingress health checks
-  - name: status-port
+  - name: http-status
     port: 15021
     protocol: TCP
     targetPort: 15021
