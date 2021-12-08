@@ -34,12 +34,14 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:1d476d6
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:ba347ad
         ports:
         - containerPort: 7070
         env:
         - name: REDIS_ADDR
           value: "10.169.199.11"
+        - name: REDIS_AUTH
+          value: "0f84aec9-24e9-492f-a7df-ae4883bf17c3"
         resources:
           requests:
             cpu: 60m
