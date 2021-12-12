@@ -22,14 +22,14 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: ledgerwriter
-        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledgerwriter:v0.5.0
+        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledgerwriter:v0.5.1
         volumeMounts:
         - name: publickey
           mountPath: "/root/.ssh"
           readOnly: true
         env:
         - name: VERSION
-          value: "v0.5.0"
+          value: "v0.5.1"
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
