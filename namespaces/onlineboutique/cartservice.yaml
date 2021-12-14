@@ -34,7 +34,7 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:096ce20
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:1bb10bf
         ports:
         - containerPort: 7070
         env:
