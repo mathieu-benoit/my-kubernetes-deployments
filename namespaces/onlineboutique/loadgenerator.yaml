@@ -76,4 +76,4 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./frontend.onlineboutique"
+    - "./frontend.onlineboutique.svc.cluster.local"

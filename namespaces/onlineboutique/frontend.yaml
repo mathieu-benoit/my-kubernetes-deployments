@@ -172,10 +172,10 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./adservice.onlineboutique"
-    - "./cartservice.onlineboutique"
-    - "./checkoutservice.onlineboutique"
-    - "./currencyservice.onlineboutique"
-    - "./productcatalogservice.onlineboutique"
-    - "./recommendationservice.onlineboutique"
-    - "./shippingservice.onlineboutique"
+    - "./adservice.onlineboutique.svc.cluster.local"
+    - "./cartservice.onlineboutique.svc.cluster.local"
+    - "./checkoutservice.onlineboutique.svc.cluster.local"
+    - "./currencyservice.onlineboutique.svc.cluster.local"
+    - "./productcatalogservice.onlineboutique.svc.cluster.local"
+    - "./recommendationservice.onlineboutique.svc.cluster.local"
+    - "./shippingservice.onlineboutique.svc.cluster.local"
