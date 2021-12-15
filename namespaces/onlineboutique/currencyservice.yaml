@@ -116,3 +116,15 @@ spec:
           paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
           methods: ["POST"]
           ports: ["7000"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: currencyservice
+spec:
+  workloadSelector:
+    labels:
+      app: currencyservice
+  egress:
+  - hosts:
+    - "istio-system/*"

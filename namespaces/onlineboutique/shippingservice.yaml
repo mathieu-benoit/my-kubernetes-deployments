@@ -117,3 +117,15 @@ spec:
           paths: ["/hipstershop.ShippingService/GetQuote", "/hipstershop.ShippingService/ShipOrder"]
           methods: ["POST"]
           ports: ["50051"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: shippingservice
+spec:
+  workloadSelector:
+    labels:
+      app: shippingservice
+  egress:
+  - hosts:
+    - "istio-system/*"

@@ -118,3 +118,15 @@ spec:
           paths: ["/hipstershop.AdService/GetAds"]
           methods: ["POST"]
           ports: ["9555"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: adservice
+spec:
+  workloadSelector:
+    labels:
+      app: adservice
+  egress:
+  - hosts:
+    - "istio-system/*"

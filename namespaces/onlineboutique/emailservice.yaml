@@ -114,3 +114,15 @@ spec:
           paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
           methods: ["POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: emailservice
+spec:
+  workloadSelector:
+    labels:
+      app: emailservice
+  egress:
+  - hosts:
+    - "istio-system/*"

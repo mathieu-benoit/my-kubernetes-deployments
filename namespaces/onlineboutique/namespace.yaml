@@ -30,13 +30,3 @@ metadata:
   name: deny-all
 spec:
   {}
----
-apiVersion: networking.istio.io/v1beta1
-kind: Sidecar
-metadata:
-  name: default
-spec:
-  egress:
-  - hosts:
-    - "./*"
-    - "istio-system/*"

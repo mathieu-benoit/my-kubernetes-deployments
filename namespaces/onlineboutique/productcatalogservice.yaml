@@ -120,3 +120,15 @@ spec:
           paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]
           methods: ["POST"]
           ports: ["3550"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: productcatalogservice
+spec:
+  workloadSelector:
+    labels:
+      app: productcatalogservice
+  egress:
+  - hosts:
+    - "istio-system/*"

@@ -124,3 +124,15 @@ spec:
       - operation:
           paths: ["/hipstershop.CartService/AddItem", "/hipstershop.CartService/GetCart", "/hipstershop.CartService/EmptyCart"]
           methods: ["POST"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: cartservice
+spec:
+  workloadSelector:
+    labels:
+      app: cartservice
+  egress:
+  - hosts:
+    - "istio-system/*"

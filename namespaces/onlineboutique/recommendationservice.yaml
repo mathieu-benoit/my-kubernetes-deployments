@@ -118,3 +118,16 @@ spec:
           paths: ["/hipstershop.RecommendationService/ListRecommendations"]
           methods: ["POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: recommendationservice
+spec:
+  workloadSelector:
+    labels:
+      app: recommendationservice
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./productcatalogservice"

@@ -64,3 +64,16 @@ spec:
   - Egress
   egress:
   - {}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: loadgenerator
+spec:
+  workloadSelector:
+    labels:
+      app: loadgenerator
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./frontend"

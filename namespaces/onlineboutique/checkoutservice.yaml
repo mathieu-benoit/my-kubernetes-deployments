@@ -125,3 +125,20 @@ spec:
           paths: ["/hipstershop.CheckoutService/PlaceOrder"]
           methods: ["POST"]
           ports: ["5050"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: checkoutservice
+spec:
+  workloadSelector:
+    labels:
+      app: checkoutservice
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./cartservice"
+    - "./currencyservice"
+    - "./emailservice"
+    - "./paymentservice"
+    - "./shippingservice"
