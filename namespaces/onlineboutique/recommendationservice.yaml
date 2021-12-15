@@ -130,4 +130,4 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./productcatalogservice"
+    - "./productcatalogservice.onlineboutique"

@@ -137,8 +137,8 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./cartservice"
-    - "./currencyservice"
-    - "./emailservice"
-    - "./paymentservice"
-    - "./shippingservice"
+    - "./cartservice.onlineboutique"
+    - "./currencyservice.onlineboutique"
+    - "./emailservice.onlineboutique"
+    - "./paymentservice.onlineboutique"
+    - "./shippingservice.onlineboutique"
