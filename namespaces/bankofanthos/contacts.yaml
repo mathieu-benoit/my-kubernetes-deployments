@@ -95,3 +95,15 @@ spec:
           paths: ["/contacts/*"]
           methods: ["GET"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: contacts
+spec:
+  workloadSelector:
+    labels:
+      app: contacts
+  egress:
+  - hosts:
+    - "istio-system/*"

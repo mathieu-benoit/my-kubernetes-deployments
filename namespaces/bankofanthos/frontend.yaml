@@ -134,3 +134,20 @@ spec:
       - operation:
           methods: ["GET", "POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: frontend
+spec:
+  workloadSelector:
+    labels:
+      app: frontend
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./balancereader.bankofanthos.svc.cluster.local"
+    - "./contacts.bankofanthos.svc.cluster.local"
+    - "./ledgerwriter.bankofanthos.svc.cluster.local"
+    - "./transactionhistory.bankofanthos.svc.cluster.local"
+    - "./userservice.bankofanthos.svc.cluster.local"

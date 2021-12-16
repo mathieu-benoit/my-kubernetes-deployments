@@ -117,3 +117,15 @@ spec:
           paths: ["/balances/*"]
           methods: ["GET"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: balancereader
+spec:
+  workloadSelector:
+    labels:
+      app: balancereader
+  egress:
+  - hosts:
+    - "istio-system/*"

@@ -36,7 +36,7 @@ spec:
           value: "false"
         - name: ENABLE_METRICS
           value: "false"
-         # tell Java to obey container memory limits
+        # tell Java to obey container memory limits
         - name: JVM_OPTS
           value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
         # service level override of log level
@@ -106,3 +106,16 @@ spec:
           paths: ["/transactions", "/transactions/*"]
           methods: ["POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: ledgerwriter
+spec:
+  workloadSelector:
+    labels:
+      app: ledgerwriter
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./balancereader.bankofanthos.svc.cluster.local"

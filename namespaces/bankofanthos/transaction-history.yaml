@@ -122,3 +122,15 @@ spec:
           paths: ["/transactions/*"]
           methods: ["GET"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: transactionhistory
+spec:
+  workloadSelector:
+    labels:
+      app: transactionhistory
+  egress:
+  - hosts:
+    - "istio-system/*"

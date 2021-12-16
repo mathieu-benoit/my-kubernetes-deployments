@@ -103,3 +103,15 @@ spec:
           paths: ["/users", "/login"]
           methods: ["GET", "POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: userservice
+spec:
+  workloadSelector:
+    labels:
+      app: userservice
+  egress:
+  - hosts:
+    - "istio-system/*"
