@@ -119,3 +119,4 @@ spec:
   - hosts:
     - "istio-system/*"
     - "./balancereader.bankofanthos.svc.cluster.local"
+    - "./ledger-db.bankofanthos.svc.cluster.local"

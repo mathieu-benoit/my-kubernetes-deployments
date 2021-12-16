@@ -107,3 +107,4 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
+    - "./accounts-db.bankofanthos.svc.cluster.local"

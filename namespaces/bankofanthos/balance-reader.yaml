@@ -129,3 +129,4 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
+    - "./ledger-db.bankofanthos.svc.cluster.local"
