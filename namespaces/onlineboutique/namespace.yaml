@@ -4,7 +4,7 @@ metadata:
   name: onlineboutique
   labels:
     name: onlineboutique
-    istio.io/rev: asm-1112-17
+    istio.io/rev: asm-1120-4
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
