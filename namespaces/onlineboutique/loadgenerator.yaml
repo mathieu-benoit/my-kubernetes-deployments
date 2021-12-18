@@ -26,7 +26,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: main
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/loadgenerator:v0.3.3
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/loadgenerator:v0.3.4
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
