@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: contacts
-        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/contacts:v0.5.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/contacts:v0.5.2
         volumeMounts:
         - name: publickey
           mountPath: "/root/.ssh"
