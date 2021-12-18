@@ -141,4 +141,5 @@ spec:
     - "./currencyservice.onlineboutique.svc.cluster.local"
     - "./emailservice.onlineboutique.svc.cluster.local"
     - "./paymentservice.onlineboutique.svc.cluster.local"
+    - "./productcatalogservice.onlineboutique.svc.cluster.local"
     - "./shippingservice.onlineboutique.svc.cluster.local"
