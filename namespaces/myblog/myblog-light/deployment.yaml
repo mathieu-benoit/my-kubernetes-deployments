@@ -29,7 +29,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: us-east4-docker.pkg.dev/mygke-200/containers/myblog:c18fa86
+          image: us-east4-docker.pkg.dev/mygke-200/containers/myblog:f884991
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
