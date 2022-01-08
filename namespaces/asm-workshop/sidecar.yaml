@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: default
+spec:
+  workloadSelector:
+    labels:
+      app: asm-workshop
+  egress:
+  - hosts:
+    - "istio-system/*"

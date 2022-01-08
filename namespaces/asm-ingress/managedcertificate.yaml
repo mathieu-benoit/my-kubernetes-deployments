@@ -29,3 +29,11 @@ metadata:
 spec:
   domains:
     - ob.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: asm-workshop
+spec:
+  domains:
+    - asm-workshop.alwaysupalwayson.com
