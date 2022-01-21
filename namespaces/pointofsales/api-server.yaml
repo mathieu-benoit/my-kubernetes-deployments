@@ -133,5 +133,5 @@ spec:
         principals: ["cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
     to:
       - operation:
-          methods: ["GET"]
+          methods: ["GET", "POST"]
           ports: ["8080"]
