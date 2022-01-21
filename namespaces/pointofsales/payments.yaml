@@ -97,7 +97,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: inventory
+      app: payments
   rules:
   - from:
     - source:
