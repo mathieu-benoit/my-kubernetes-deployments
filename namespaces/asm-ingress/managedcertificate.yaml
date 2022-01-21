@@ -37,3 +37,11 @@ metadata:
 spec:
   domains:
     - asm-workshop.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: pointofsales
+spec:
+  domains:
+    - pos.alwaysupalwayson.com
