@@ -104,5 +104,5 @@ spec:
         principals: ["cluster.local/ns/pointofsales/sa/api-server"]
     to:
       - operation:
-          methods: ["GET"]
+          methods: ["GET", "POST"]
           ports: ["8080"]
