@@ -46,7 +46,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: payments-svc
+  name: payments
 spec:
   type: ClusterIP
   selector:
@@ -55,3 +55,15 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: payments
+spec:
+  workloadSelector:
+    labels:
+      app: payments
+  egress:
+  - hosts:
+    - "istio-system/*"

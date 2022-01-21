@@ -62,7 +62,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: inventory-svc
+  name: inventory
 spec:
   type: ClusterIP
   selector:
@@ -71,3 +71,15 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: inventory
+spec:
+  workloadSelector:
+    labels:
+      app: inventory
+  egress:
+  - hosts:
+    - "istio-system/*"

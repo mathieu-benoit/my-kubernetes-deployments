@@ -82,3 +82,17 @@ spec:
         host: api-server
         port:
           number: 8080
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: api-server
+spec:
+  workloadSelector:
+    labels:
+      app: api-server
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./inventory.pointofsales.svc.cluster.local"
+    - "./payments.pointofsales.svc.cluster.local"
