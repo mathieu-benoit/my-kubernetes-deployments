@@ -83,3 +83,20 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: api-server
+spec:
+  selector:
+    matchLabels:
+      app: inventory
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/pointofsales/sa/api-server"]
+    to:
+      - operation:
+          methods: ["GET"]
+          ports: ["8080"]
