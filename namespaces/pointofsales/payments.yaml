@@ -46,7 +46,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: payments
+  name: payments-svc
 spec:
   type: ClusterIP
   selector:

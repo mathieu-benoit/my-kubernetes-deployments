@@ -79,7 +79,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-server
+  name: api-server-svc
 spec:
   type: ClusterIP
   selector:
@@ -101,7 +101,7 @@ spec:
   http:
   - route:
     - destination:
-        host: api-server
+        host: api-server-svc
         port:
           number: 8080
 ---
@@ -116,8 +116,8 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./inventory.pointofsales.svc.cluster.local"
-    - "./payments.pointofsales.svc.cluster.local"
+    - "./inventory-svc.pointofsales.svc.cluster.local"
+    - "./payments-svc.pointofsales.svc.cluster.local"
 ---
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
