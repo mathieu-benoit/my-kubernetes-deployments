@@ -32,7 +32,7 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: us-east4-docker.pkg.dev/mygke-200/containers/pointofsales/inventory:fbc63fd
+        image: us-east4-docker.pkg.dev/mygke-200/containers/pointofsales/inventory:d192dfa-dirty
         env:
         - name: CONNECTOR
           valueFrom:
