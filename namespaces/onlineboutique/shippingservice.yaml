@@ -21,7 +21,7 @@ spec:
       serviceAccountName: shippingservice
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/shippingservice:v0.3.5
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/shippingservice:v0.3.6
         ports:
         - containerPort: 50051
         env:
