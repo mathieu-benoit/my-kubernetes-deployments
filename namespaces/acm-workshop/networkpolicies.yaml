@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: denyall
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: acm-workshop
+spec:
+  podSelector:
+    matchLabels:
+      app: acm-workshop
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: asm-ingress
+      podSelector:
+        matchLabels:
+          app: asm-ingressgateway
+    ports:
+     - port: 8080
+       protocol: TCP
+  egress:
+  - {}
