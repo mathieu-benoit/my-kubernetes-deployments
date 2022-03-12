@@ -22,7 +22,7 @@ jobs:
           nomos hydrate --flat --no-api-server-check --output tmp/hydrated-manifests.yaml
       - name: kubeval
         run: |
-          kpt fn eval tmp --image gcr.io/kpt-fn/kubeval:v0.2 -- strict=true ignore_missing_schemas=true
+          kpt fn eval tmp/ --results-dir results --image gcr.io/kpt-fn/kubeval:v0.2 -- strict=true ignore_missing_schemas=true
       - name: gatekeeper
         run: |
-          kpt fn eval --image gcr.io/kpt-fn/gatekeeper:v0.2 tmp/
+          kpt fn eval tmp/ --results-dir results --image gcr.io/kpt-fn/gatekeeper:v0.2
