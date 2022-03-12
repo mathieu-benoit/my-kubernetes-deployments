@@ -29,7 +29,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: us-east4-docker.pkg.dev/mygke-200/containers/acm-workshop:6f9376e
+          image: us-east4-docker.pkg.dev/mygke-200/containers/acm-workshop:1e961cd
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
