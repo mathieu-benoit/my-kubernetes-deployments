@@ -22,14 +22,14 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: ledgerwriter
-        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledgerwriter:v0.5.3
+        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledgerwriter:v0.5.4
         volumeMounts:
         - name: publickey
           mountPath: "/root/.ssh"
           readOnly: true
         env:
         - name: VERSION
-          value: "v0.5.3"
+          value: "v0.5.4"
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
@@ -38,7 +38,7 @@ spec:
           value: "false"
         # tell Java to obey container memory limits
         - name: JVM_OPTS
-          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms128m -Xmx256m"
         # service level override of log level
         - name: LOG_LEVEL
           value: "info"
@@ -57,10 +57,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 512Mi
+            memory: 256Mi
           limits:
-            cpu: 500m
-            memory: 1Gi
+            cpu: 250m
+            memory: 512Mi
         readinessProbe:
           httpGet:
             path: /ready

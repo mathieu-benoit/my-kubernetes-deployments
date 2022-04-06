@@ -23,7 +23,7 @@ spec:
       serviceAccountName: ledger-db
       containers:
         - name: postgres
-          image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledger-db:v0.5.3
+          image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledger-db:v0.5.4
           ports:
             - containerPort: 5432
           envFrom:
@@ -38,7 +38,7 @@ spec:
               cpu: 100m
               memory: 512Mi
             limits:
-              cpu: 500m
+              cpu: 250m
               memory: 1Gi
           volumeMounts:
             - name: postgresdb
