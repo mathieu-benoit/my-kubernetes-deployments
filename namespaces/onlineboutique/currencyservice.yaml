@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/currencyservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/currencyservice:v0.3.6
         ports:
         - name: grpc
           containerPort: 7000
@@ -116,3 +116,15 @@ spec:
           paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
           methods: ["POST"]
           ports: ["7000"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: currencyservice
+spec:
+  workloadSelector:
+    labels:
+      app: currencyservice
+  egress:
+  - hosts:
+    - "istio-system/*"

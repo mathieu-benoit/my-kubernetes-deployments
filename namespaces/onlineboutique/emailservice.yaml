@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/emailservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/emailservice:v0.3.6
         ports:
         - containerPort: 8080
         env:
@@ -114,3 +114,15 @@ spec:
           paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
           methods: ["POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: emailservice
+spec:
+  workloadSelector:
+    labels:
+      app: emailservice
+  egress:
+  - hosts:
+    - "istio-system/*"

@@ -22,12 +22,18 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/paymentservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/paymentservice:v0.3.6
         ports:
         - containerPort: 50051
         env:
         - name: PORT
           value: "50051"
+        - name: DISABLE_TRACING
+          value: "1"
+        - name: DISABLE_PROFILER
+          value: "1"
+        - name: DISABLE_DEBUGGER
+          value: "1"
         readinessProbe:
           exec:
             command: ["/bin/grpc_health_probe", "-addr=:50051"]
@@ -106,3 +112,15 @@ spec:
           paths: ["/hipstershop.PaymentService/Charge"]
           methods: ["POST"]
           ports: ["50051"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: paymentservice
+spec:
+  workloadSelector:
+    labels:
+      app: paymentservice
+  egress:
+  - hosts:
+    - "istio-system/*"

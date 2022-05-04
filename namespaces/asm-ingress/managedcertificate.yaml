@@ -29,3 +29,27 @@ metadata:
 spec:
   domains:
     - ob.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: asm-workshop
+spec:
+  domains:
+    - asm-workshop.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: pointofsales
+spec:
+  domains:
+    - pos.alwaysupalwayson.com
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: acm-workshop
+spec:
+  domains:
+    - acm-workshop.alwaysupalwayson.com

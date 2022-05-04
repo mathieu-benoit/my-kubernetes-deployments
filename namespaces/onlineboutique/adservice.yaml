@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/adservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/adservice:v0.3.6
         ports:
         - containerPort: 9555
         env:
@@ -118,3 +118,15 @@ spec:
           paths: ["/hipstershop.AdService/GetAds"]
           methods: ["POST"]
           ports: ["9555"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: adservice
+spec:
+  workloadSelector:
+    labels:
+      app: adservice
+  egress:
+  - hosts:
+    - "istio-system/*"

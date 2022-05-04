@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/productcatalogservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/productcatalogservice:v0.3.6
         ports:
         - containerPort: 3550
         env:
@@ -120,3 +120,15 @@ spec:
           paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]
           methods: ["POST"]
           ports: ["3550"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: productcatalogservice
+spec:
+  workloadSelector:
+    labels:
+      app: productcatalogservice
+  egress:
+  - hosts:
+    - "istio-system/*"

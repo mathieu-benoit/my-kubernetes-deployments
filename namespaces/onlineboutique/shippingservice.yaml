@@ -21,7 +21,7 @@ spec:
       serviceAccountName: shippingservice
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/shippingservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/shippingservice:v0.3.6
         ports:
         - containerPort: 50051
         env:
@@ -117,3 +117,15 @@ spec:
           paths: ["/hipstershop.ShippingService/GetQuote", "/hipstershop.ShippingService/ShipOrder"]
           methods: ["POST"]
           ports: ["50051"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: shippingservice
+spec:
+  workloadSelector:
+    labels:
+      app: shippingservice
+  egress:
+  - hosts:
+    - "istio-system/*"

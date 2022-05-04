@@ -22,23 +22,23 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: ledgerwriter
-        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledgerwriter:v0.5.0
+        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/ledgerwriter:v0.5.4
         volumeMounts:
         - name: publickey
           mountPath: "/root/.ssh"
           readOnly: true
         env:
         - name: VERSION
-          value: "v0.5.0"
+          value: "v0.5.4"
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
           value: "false"
         - name: ENABLE_METRICS
           value: "false"
-         # tell Java to obey container memory limits
+        # tell Java to obey container memory limits
         - name: JVM_OPTS
-          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms128m -Xmx256m"
         # service level override of log level
         - name: LOG_LEVEL
           value: "info"
@@ -57,10 +57,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 512Mi
+            memory: 256Mi
           limits:
-            cpu: 500m
-            memory: 1Gi
+            cpu: 250m
+            memory: 512Mi
         readinessProbe:
           httpGet:
             path: /ready
@@ -106,3 +106,17 @@ spec:
           paths: ["/transactions", "/transactions/*"]
           methods: ["POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: ledgerwriter
+spec:
+  workloadSelector:
+    labels:
+      app: ledgerwriter
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./balancereader.bankofanthos.svc.cluster.local"
+    - "./ledger-db.bankofanthos.svc.cluster.local"

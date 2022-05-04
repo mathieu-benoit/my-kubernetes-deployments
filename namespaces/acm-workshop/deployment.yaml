@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myblog
+  name: acm-workshop
   labels:
-    app: myblog
+    app: acm-workshop
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myblog
+      app: acm-workshop
   template:
     metadata:
       labels:
-        app: myblog
+        app: acm-workshop
     spec:
       serviceAccountName: default
       securityContext:
@@ -21,7 +21,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
       containers:
-        - name: myblog
+        - name: acm-workshop
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -29,7 +29,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: us-east4-docker.pkg.dev/mygke-200/containers/myblog:34b90e8
+          image: us-east4-docker.pkg.dev/mygke-200/containers/acm-workshop:59e90b9
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

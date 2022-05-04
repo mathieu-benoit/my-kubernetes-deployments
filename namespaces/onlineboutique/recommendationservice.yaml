@@ -22,7 +22,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/recommendationservice:v0.3.1
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/recommendationservice:v0.3.6
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -118,3 +118,16 @@ spec:
           paths: ["/hipstershop.RecommendationService/ListRecommendations"]
           methods: ["POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: recommendationservice
+spec:
+  workloadSelector:
+    labels:
+      app: recommendationservice
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./productcatalogservice.onlineboutique.svc.cluster.local"

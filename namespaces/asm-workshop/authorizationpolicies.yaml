@@ -1,0 +1,23 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+spec:
+  {}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: asm-workshop
+spec:
+  selector:
+    matchLabels:
+      app: asm-workshop
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
+    to:
+      - operation:
+          methods: ["GET"]
+          ports: ["8080"]

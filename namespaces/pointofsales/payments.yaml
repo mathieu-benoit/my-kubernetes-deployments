@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payments
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+spec:
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      serviceAccountName: payments
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: payments
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+          privileged: false
+          readOnlyRootFilesystem: true
+        image: us-east4-docker.pkg.dev/mygke-200/containers/pointofsales/payments:d192dfa-dirty
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 1
+            memory: 1Gi
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 5
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthy
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 5
+          timeoutSeconds: 10
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      nodeSelector:
+        kubernetes.io/os: linux
+      volumes:
+      - emptyDir: {}
+        name: tmp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: payments
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: payments
+spec:
+  workloadSelector:
+    labels:
+      app: payments
+  egress:
+  - hosts:
+    - "istio-system/*"
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: payments
+spec:
+  selector:
+    matchLabels:
+      app: payments
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/pointofsales/sa/api-server"]
+    to:
+      - operation:
+          methods: ["GET", "POST"]
+          ports: ["8080"]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: payments
+spec:
+  podSelector:
+    matchLabels:
+      app: payments
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-server
+    ports:
+     - port: 8080
+       protocol: TCP

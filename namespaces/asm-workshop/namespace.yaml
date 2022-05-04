@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: myblog
+  name: asm-workshop
   annotations:
     mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
-    name: myblog
+    name: asm-workshop
     istio.io/rev: asm-managed-rapid

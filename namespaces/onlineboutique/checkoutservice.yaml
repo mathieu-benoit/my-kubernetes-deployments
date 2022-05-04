@@ -21,7 +21,7 @@ spec:
       serviceAccountName: checkoutservice
       containers:
         - name: server
-          image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/checkoutservice:v0.3.1
+          image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/checkoutservice:v0.3.6
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -125,3 +125,21 @@ spec:
           paths: ["/hipstershop.CheckoutService/PlaceOrder"]
           methods: ["POST"]
           ports: ["5050"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: checkoutservice
+spec:
+  workloadSelector:
+    labels:
+      app: checkoutservice
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./cartservice.onlineboutique.svc.cluster.local"
+    - "./currencyservice.onlineboutique.svc.cluster.local"
+    - "./emailservice.onlineboutique.svc.cluster.local"
+    - "./paymentservice.onlineboutique.svc.cluster.local"
+    - "./productcatalogservice.onlineboutique.svc.cluster.local"
+    - "./shippingservice.onlineboutique.svc.cluster.local"

@@ -3,7 +3,9 @@ kind: Sidecar
 metadata:
   name: default
 spec:
+  workloadSelector:
+    labels:
+      app: myblog
   egress:
   - hosts:
-    - "./*"
     - "istio-system/*"

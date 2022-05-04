@@ -22,14 +22,14 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: front
-        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/frontend:v0.5.0
+        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/frontend:v0.5.4
         volumeMounts:
         - name: publickey
           mountPath: "/root/.ssh"
           readOnly: true
         env:
         - name: VERSION
-          value: "v0.5.0"
+          value: "v0.5.4"
         - name: PORT
           value: "8080"
         - name: ENABLE_TRACING
@@ -79,8 +79,8 @@ spec:
             cpu: 100m
             memory: 64Mi
           limits:
-            cpu: 500m
-            memory: 256Mi
+            cpu: 250m
+            memory: 128Mi
       volumes:
       - name: publickey
         secret:
@@ -134,3 +134,20 @@ spec:
       - operation:
           methods: ["GET", "POST"]
           ports: ["8080"]
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: frontend
+spec:
+  workloadSelector:
+    labels:
+      app: frontend
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./balancereader.bankofanthos.svc.cluster.local"
+    - "./contacts.bankofanthos.svc.cluster.local"
+    - "./ledgerwriter.bankofanthos.svc.cluster.local"
+    - "./transactionhistory.bankofanthos.svc.cluster.local"
+    - "./userservice.bankofanthos.svc.cluster.local"

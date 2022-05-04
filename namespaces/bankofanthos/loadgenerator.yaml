@@ -26,7 +26,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: loadgenerator
-        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/loadgenerator:v0.5.0
+        image: us-east4-docker.pkg.dev/mygke-200/containers/bank-of-anthos/loadgenerator:v0.5.4
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -39,5 +39,18 @@ spec:
             cpu: 100m
             memory: 512Mi
           limits:
-            cpu: 500m
+            cpu: 250m
             memory: 1Gi
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: loadgenerator
+spec:
+  workloadSelector:
+    labels:
+      app: loadgenerator
+  egress:
+  - hosts:
+    - "istio-system/*"
+    - "./frontend.bankofanthos.svc.cluster.local"

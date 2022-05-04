@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: onlineboutique
+  name: pointofsales
   annotations:
     mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
-    name: onlineboutique
+    name: pointofsales
     istio.io/rev: asm-managed-rapid
 ---
 apiVersion: security.istio.io/v1beta1
@@ -16,6 +16,23 @@ spec:
   mtls:
     mode: STRICT
 ---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+spec:
+  {}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Sidecar
+metadata:
+  name: default
+spec:
+  egress:
+  - hosts:
+    - "./*"
+    - "istio-system/*"
+---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -25,10 +42,3 @@ spec:
   policyTypes:
   - Ingress
   - Egress
----
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: deny-all
-spec:
-  {}
