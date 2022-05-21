@@ -6,4 +6,4 @@ metadata:
     mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: asm-workshop
-    istio.io/rev: asm-managed-rapid
+    istio-injection: enabled

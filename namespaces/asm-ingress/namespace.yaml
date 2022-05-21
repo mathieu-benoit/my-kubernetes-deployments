@@ -6,4 +6,4 @@ metadata:
     mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: asm-ingress # for NetworkPolicies
-    istio.io/rev: asm-managed-rapid
+    istio-injection: enabled

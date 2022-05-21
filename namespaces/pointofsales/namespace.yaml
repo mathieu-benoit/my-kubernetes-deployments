@@ -6,7 +6,7 @@ metadata:
     mesh.cloud.google.com/proxy: '{"managed": true}'
   labels:
     name: pointofsales
-    istio.io/rev: asm-managed-rapid
+    istio-injection: enabled
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
