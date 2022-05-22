@@ -34,7 +34,7 @@ spec:
               - all
           privileged: false
           readOnlyRootFilesystem: true
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:redis
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/cartservice:redis2
         ports:
         - containerPort: 7070
         env:
