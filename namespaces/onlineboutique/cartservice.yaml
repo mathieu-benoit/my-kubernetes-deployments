@@ -39,7 +39,7 @@ spec:
         - containerPort: 7070
         env:
         - name: REDIS_ADDR
-          value: "10.169.199.11"
+          value: "10.74.53.187"
         - name: REDIS_AUTH
           value: "0f84aec9-24e9-492f-a7df-ae4883bf17c3"
         resources:
