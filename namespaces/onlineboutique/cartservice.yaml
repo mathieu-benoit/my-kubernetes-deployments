@@ -136,3 +136,4 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
+    - "./cart.memorystore-redis.onlineboutique"
