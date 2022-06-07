@@ -15,14 +15,16 @@ jobs:
           gcloud components install kpt nomos --quiet
       - name: vet	
         run: |
-          nomos vet --no-api-server-check
-      - name: hydration	
-        run: |
-          mkdir tmp
-          nomos hydrate --flat --no-api-server-check --output tmp/hydrated-manifests.yaml
+          nomos vet --path . --no-api-server-check --source-format unstructured
       - name: kubeval
+        if: ${{ always() }}
         run: |
-          kpt fn eval tmp/ --results-dir results --image gcr.io/kpt-fn/kubeval:v0.2 -- strict=true ignore_missing_schemas=true
+          kpt fn eval . --results-dir tmp --image gcr.io/kpt-fn/kubeval:v0.3 -- strict=true ignore_missing_schemas=true
+      - name: get external templates
+        if: ${{ always() }}
+        run: |
+          kpt pkg get https://github.com/mathieu-benoit/acm-workshop-policies templates
       - name: gatekeeper
+        if: ${{ always() }}
         run: |
-          kpt fn eval tmp/ --results-dir results --image gcr.io/kpt-fn/gatekeeper:v0.2
+          kpt fn eval . --results-dir tmp --image gcr.io/kpt-fn/gatekeeper:v0.2
