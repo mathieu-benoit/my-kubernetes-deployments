@@ -1,33 +1,36 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: paymentservice
+  name: currencyservice
+  namespace: ob
   annotations:
     iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paymentservice
+  name: currencyservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
-      app: paymentservice
+      app: currencyservice
   template:
     metadata:
       labels:
-        app: paymentservice
+        app: currencyservice
     spec:
-      serviceAccountName: paymentservice
+      serviceAccountName: currencyservice
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/paymentservice:v0.3.7
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/currencyservice:v0.3.7
         ports:
-        - containerPort: 50051
+        - name: grpc
+          containerPort: 7000
         env:
         - name: PORT
-          value: "50051"
+          value: "7000"
         - name: DISABLE_TRACING
           value: "1"
         - name: DISABLE_PROFILER
@@ -36,51 +39,41 @@ spec:
           value: "1"
         readinessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:50051"]
+            command: ["/bin/grpc_health_probe", "-addr=:7000"]
         livenessProbe:
           exec:
-            command: ["/bin/grpc_health_probe", "-addr=:50051"]
+            command: ["/bin/grpc_health_probe", "-addr=:7000"]
         resources:
           requests:
-            cpu: 9m
-            memory: 72Mi
+            cpu: 20m
+            memory: 83Mi
           limits:
             cpu: 50m
-            memory: 75Mi
+            memory: 98Mi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice
+  name: currencyservice
+  namespace: ob
 spec:
   type: ClusterIP
   selector:
-    app: paymentservice
+    app: currencyservice
   ports:
   - name: grpc
-    port: 50051
-    targetPort: 50051
----
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: paymentservice
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: paymentservice
-  updatePolicy:
-    updateMode: "Off"
+    port: 7000
+    targetPort: 7000
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: paymentservice
+  name: currencyservice
+  namespace: ob
 spec:
   podSelector:
     matchLabels:
-      app: paymentservice
+      app: currencyservice
   policyTypes:
   - Ingress
   - Egress
@@ -88,9 +81,12 @@ spec:
   - from:
     - podSelector:
         matchLabels:
+          app: frontend
+    - podSelector:
+        matchLabels:
           app: checkoutservice
     ports:
-     - port: 50051
+     - port: 7000
        protocol: TCP
   egress:
   - {}
@@ -98,29 +94,31 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: paymentservice
+  name: currencyservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
-      app: paymentservice
+      app: currencyservice
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/checkoutservice"]
+        principals: ["cluster.local/ns/onlineboutique/sa/frontend", "cluster.local/ns/onlineboutique/sa/checkoutservice"]
     to:
       - operation:
-          paths: ["/hipstershop.PaymentService/Charge"]
+          paths: ["/hipstershop.CurrencyService/Convert", "/hipstershop.CurrencyService/GetSupportedCurrencies"]
           methods: ["POST"]
-          ports: ["50051"]
+          ports: ["7000"]
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
-  name: paymentservice
+  name: currencyservice
+  namespace: ob
 spec:
   workloadSelector:
     labels:
-      app: paymentservice
+      app: currencyservice
   egress:
   - hosts:
     - "istio-system/*"

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: frontend
+  namespace: ob
   annotations:
     iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
@@ -9,6 +10,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -79,6 +81,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: ob
 spec:
   type: ClusterIP
   selector:
@@ -88,22 +91,11 @@ spec:
     port: 80
     targetPort: 8080
 ---
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: frontend
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: frontend
-  updatePolicy:
-    updateMode: "Off"
----
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: frontend
+  namespace: ob
 spec:
   hosts:
     - ob.alwaysupalwayson.com
@@ -120,6 +112,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: frontend
+  namespace: ob
 spec:
   podSelector:
     matchLabels:
@@ -148,6 +141,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: frontend
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -155,7 +149,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/loadgenerator", "cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
+        principals: ["cluster.local/ns/ob/sa/loadgenerator", "cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
     to:
       - operation:
           ports: ["8080"]
@@ -165,6 +159,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: frontend
+  namespace: ob
 spec:
   workloadSelector:
     labels:
@@ -172,10 +167,10 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./adservice.onlineboutique.svc.cluster.local"
-    - "./cartservice.onlineboutique.svc.cluster.local"
-    - "./checkoutservice.onlineboutique.svc.cluster.local"
-    - "./currencyservice.onlineboutique.svc.cluster.local"
-    - "./productcatalogservice.onlineboutique.svc.cluster.local"
-    - "./recommendationservice.onlineboutique.svc.cluster.local"
-    - "./shippingservice.onlineboutique.svc.cluster.local"
+    - "./adservice.ob.svc.cluster.local"
+    - "./cartservice.ob.svc.cluster.local"
+    - "./checkoutservice.ob.svc.cluster.local"
+    - "./currencyservice.ob.svc.cluster.local"
+    - "./productcatalogservice.ob.svc.cluster.local"
+    - "./recommendationservice.ob.svc.cluster.local"
+    - "./shippingservice.ob.svc.cluster.local"

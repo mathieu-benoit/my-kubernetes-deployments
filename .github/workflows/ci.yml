@@ -16,7 +16,6 @@ jobs:
       - name: vet	
         run: |
           nomos vet --path . --no-api-server-check --source-format unstructured
-          ls compiled
       - name: kubeval
         if: ${{ always() }}
         run: |

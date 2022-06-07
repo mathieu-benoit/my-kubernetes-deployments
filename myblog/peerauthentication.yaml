@@ -3,6 +3,7 @@ apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
   name: default
+  namespace: myblog
 spec:
   mtls:
     mode: STRICT

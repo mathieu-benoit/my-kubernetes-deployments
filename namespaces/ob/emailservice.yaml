@@ -1,30 +1,39 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: recommendationservice
+  name: emailservice
+  namespace: ob
   annotations:
     iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: recommendationservice
+  name: emailservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
-      app: recommendationservice
+      app: emailservice
   template:
     metadata:
       labels:
-        app: recommendationservice
+        app: emailservice
     spec:
-      serviceAccountName: recommendationservice
+      serviceAccountName: emailservice
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/recommendationservice:v0.3.7
+        image: us-east4-docker.pkg.dev/mygke-200/containers/boutique/emailservice:v0.3.7
         ports:
         - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: DISABLE_TRACING
+          value: "1"
+        - name: DISABLE_PROFILER
+          value: "1"
         readinessProbe:
           periodSeconds: 5
           timeoutSeconds: 10
@@ -35,58 +44,37 @@ spec:
           timeoutSeconds: 10
           exec:
             command: ["/bin/grpc_health_probe", "-addr=:8080"]
-        env:
-        - name: PORT
-          value: "8080"
-        - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: "productcatalogservice:3550"
-        - name: DISABLE_TRACING
-          value: "1"
-        - name: DISABLE_PROFILER
-          value: "1"
-        - name: DISABLE_DEBUGGER
-          value: "1"
         resources:
           requests:
             cpu: 100m
-            memory: 220Mi
+            memory: 64Mi
           limits:
             cpu: 200m
-            memory: 450Mi
+            memory: 128Mi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice
+  name: emailservice
+  namespace: ob
 spec:
   type: ClusterIP
   selector:
-    app: recommendationservice
+    app: emailservice
   ports:
   - name: grpc
-    port: 8080
+    port: 5000
     targetPort: 8080
----
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: recommendationservice
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: recommendationservice
-  updatePolicy:
-    updateMode: "Off"
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: recommendationservice
+  name: emailservice
+  namespace: ob
 spec:
   podSelector:
     matchLabels:
-      app: recommendationservice
+      app: emailservice
   policyTypes:
   - Ingress
   - Egress
@@ -94,7 +82,7 @@ spec:
   - from:
     - podSelector:
         matchLabels:
-          app: frontend
+          app: checkoutservice
     ports:
      - port: 8080
        protocol: TCP
@@ -104,30 +92,31 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: recommendationservice
+  name: emailservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
-      app: recommendationservice
+      app: emailservice
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
+        principals: ["cluster.local/ns/onlineboutique/sa/checkoutservice"]
     to:
       - operation:
-          paths: ["/hipstershop.RecommendationService/ListRecommendations"]
+          paths: ["/hipstershop.EmailService/SendOrderConfirmation"]
           methods: ["POST"]
           ports: ["8080"]
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
-  name: recommendationservice
+  name: emailservice
+  namespace: ob
 spec:
   workloadSelector:
     labels:
-      app: recommendationservice
+      app: emailservice
   egress:
   - hosts:
     - "istio-system/*"
-    - "./productcatalogservice.onlineboutique.svc.cluster.local"

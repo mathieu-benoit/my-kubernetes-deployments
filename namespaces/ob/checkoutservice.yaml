@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: checkoutservice
+  namespace: ob
   annotations:
     iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
@@ -9,6 +10,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -65,6 +67,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: checkoutservice
+  namespace: ob
 spec:
   type: ClusterIP
   selector:
@@ -74,22 +77,11 @@ spec:
     port: 5050
     targetPort: 5050
 ---
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: checkoutservice
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: checkoutservice
-  updatePolicy:
-    updateMode: "Off"
----
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: checkoutservice
+  namespace: ob
 spec:
   podSelector:
     matchLabels:
@@ -112,6 +104,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: checkoutservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -119,7 +112,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
+        principals: ["cluster.local/ns/ob/sa/frontend"]
     to:
       - operation:
           paths: ["/hipstershop.CheckoutService/PlaceOrder"]
@@ -130,6 +123,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: checkoutservice
+  namespace: ob
 spec:
   workloadSelector:
     labels:
@@ -137,9 +131,9 @@ spec:
   egress:
   - hosts:
     - "istio-system/*"
-    - "./cartservice.onlineboutique.svc.cluster.local"
-    - "./currencyservice.onlineboutique.svc.cluster.local"
-    - "./emailservice.onlineboutique.svc.cluster.local"
-    - "./paymentservice.onlineboutique.svc.cluster.local"
-    - "./productcatalogservice.onlineboutique.svc.cluster.local"
-    - "./shippingservice.onlineboutique.svc.cluster.local"
+    - "./cartservice.ob.svc.cluster.local"
+    - "./currencyservice.ob.svc.cluster.local"
+    - "./emailservice.ob.svc.cluster.local"
+    - "./paymentservice.ob.svc.cluster.local"
+    - "./productcatalogservice.ob.svc.cluster.local"
+    - "./shippingservice.ob.svc.cluster.local"

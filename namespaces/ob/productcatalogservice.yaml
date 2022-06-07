@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: productcatalogservice
+  namespace: ob
   annotations:
     iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
@@ -9,6 +10,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -54,6 +56,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productcatalogservice
+  namespace: ob
 spec:
   type: ClusterIP
   selector:
@@ -63,22 +66,11 @@ spec:
     port: 3550
     targetPort: 3550
 ---
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: productcatalogservice
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: productcatalogservice
-  updatePolicy:
-    updateMode: "Off"
----
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: productcatalogservice
+  namespace: ob
 spec:
   podSelector:
     matchLabels:
@@ -107,6 +99,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: productcatalogservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -114,7 +107,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/frontend", "cluster.local/ns/onlineboutique/sa/checkoutservice", "cluster.local/ns/onlineboutique/sa/recommendationservice"]
+        principals: ["cluster.local/ns/ob/sa/frontend", "cluster.local/ns/ob/sa/checkoutservice", "cluster.local/ns/ob/sa/recommendationservice"]
     to:
       - operation:
           paths: ["/hipstershop.ProductCatalogService/GetProduct", "/hipstershop.ProductCatalogService/ListProducts"]
@@ -125,6 +118,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: productcatalogservice
+  namespace: ob
 spec:
   workloadSelector:
     labels:

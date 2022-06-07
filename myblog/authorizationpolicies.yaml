@@ -2,6 +2,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: deny-all
+  namespace: myblog
 spec:
   {}
 ---
@@ -9,6 +10,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: myblog
+  namespace: myblog
 spec:
   selector:
     matchLabels:

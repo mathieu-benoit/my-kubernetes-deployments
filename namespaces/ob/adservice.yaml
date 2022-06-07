@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: adservice
+  namespace: ob
   annotations:
     iam.gke.io/gcp-service-account: onlineboutique-gsa@mygke-200.iam.gserviceaccount.com
 ---
@@ -9,6 +10,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -58,6 +60,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: adservice
+  namespace: ob
 spec:
   type: ClusterIP
   selector:
@@ -67,22 +70,11 @@ spec:
     port: 9555
     targetPort: 9555
 ---
-apiVersion: autoscaling.k8s.io/v1
-kind: VerticalPodAutoscaler
-metadata:
-  name: adservice
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: adservice
-  updatePolicy:
-    updateMode: "Off"
----
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: adservice
+  namespace: ob
 spec:
   podSelector:
     matchLabels:
@@ -105,6 +97,7 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: adservice
+  namespace: ob
 spec:
   selector:
     matchLabels:
@@ -112,7 +105,7 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/onlineboutique/sa/frontend"]
+        principals: ["cluster.local/ns/ob/sa/frontend"]
     to:
       - operation:
           paths: ["/hipstershop.AdService/GetAds"]
@@ -123,6 +116,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
   name: adservice
+  namespace: ob
 spec:
   workloadSelector:
     labels:
