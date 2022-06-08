@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: acm-workshop
+  namespace: acm-workshop
   labels:
     app: acm-workshop
 spec:
