@@ -5,7 +5,7 @@ metadata:
   namespace: myblog
 spec:
   hosts:
-    - alwaysupalwayson.com
+    - light.alwaysupalwayson.com
   gateways:
   - asm-ingress/asm-ingressgateway
   http:
