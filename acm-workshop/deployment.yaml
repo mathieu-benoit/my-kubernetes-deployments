@@ -30,7 +30,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: us-east4-docker.pkg.dev/acm-workshop-742-tenant/containers/acm-workshop:24f6a9d
+          image: us-east4-docker.pkg.dev/acm-workshop-742-tenant/containers/acm-workshop:a8345f2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
