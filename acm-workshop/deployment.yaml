@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acm-workshop
+  namespace: acm-workshop
+  labels:
+    app: acm-workshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acm-workshop
+  template:
+    metadata:
+      labels:
+        app: acm-workshop
+    spec:
+      serviceAccountName: default
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: acm-workshop
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            privileged: false
+            readOnlyRootFilesystem: true
+          image: us-east4-docker.pkg.dev/acm-workshop-742-tenant/containers/acm-workshop:a8345f2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 5m
+              memory: 6Mi
+            limits:
+              cpu: 15m
+              memory: 122Mi
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          volumeMounts:
+          - mountPath: /tmp
+            name: tmp
+      nodeSelector:
+        kubernetes.io/os: linux
+      volumes:
+      - emptyDir: {}
+        name: tmp

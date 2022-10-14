@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: myblog-light
-  annotations:
-    mesh.cloud.google.com/proxy: '{"managed": true}'
-  labels:
-    name: myblog-light
-    istio-injection: enabled

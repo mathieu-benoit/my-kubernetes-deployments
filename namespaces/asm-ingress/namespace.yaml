@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: asm-ingress
-  annotations:
-    mesh.cloud.google.com/proxy: '{"managed": true}'
-  labels:
-    name: asm-ingress # for NetworkPolicies
-    istio-injection: enabled

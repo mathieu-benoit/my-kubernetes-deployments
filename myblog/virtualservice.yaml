@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: myblog
+  namespace: myblog
+spec:
+  hosts:
+    - alwaysupalwayson.com
+  gateways:
+  - asm-ingress/asm-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: myblog
+        port:
+          number: 80
