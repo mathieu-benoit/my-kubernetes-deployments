@@ -15,7 +15,7 @@ spec:
       labels:
         app: acm-workshop
     spec:
-      serviceAccountName: default
+      serviceAccountName: acm-workshop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
