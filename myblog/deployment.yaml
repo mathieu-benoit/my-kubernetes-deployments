@@ -15,7 +15,7 @@ spec:
       labels:
         app: myblog
     spec:
-      serviceAccountName: default
+      serviceAccountName: myblog
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000

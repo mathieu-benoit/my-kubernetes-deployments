@@ -10,8 +10,11 @@ spec:
   rules:
   - from:
     - source:
-        principals: ["cluster.local/ns/asm-ingress/sa/asm-ingressgateway"]
+        principals:
+        - cluster.local/ns/asm-ingress/sa/asm-ingressgateway
     to:
-      - operation:
-          methods: ["GET"]
-          ports: ["8080"]
+    - operation:
+        methods:
+        - GET
+        ports:
+        - "8080"
