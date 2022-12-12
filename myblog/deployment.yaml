@@ -30,7 +30,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: northamerica-northeast1-docker.pkg.dev/acm-workshop-216-tenant/containers/myblog:b3a229d
+          image: northamerica-northeast1-docker.pkg.dev/acm-workshop-216-tenant/containers/myblog:af82aee
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
